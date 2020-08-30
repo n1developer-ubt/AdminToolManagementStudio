@@ -90,10 +90,10 @@
             this.tabPageAdv2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.tabPageAdv2.Image = global::AdminToolManagementStudio.Properties.Resources.tool;
             this.tabPageAdv2.ImageSize = new System.Drawing.Size(32, 32);
-            this.tabPageAdv2.Location = new System.Drawing.Point(74, 1);
+            this.tabPageAdv2.Location = new System.Drawing.Point(0, 1);
             this.tabPageAdv2.Name = "tabPageAdv2";
             this.tabPageAdv2.ShowCloseButton = true;
-            this.tabPageAdv2.Size = new System.Drawing.Size(720, 443);
+            this.tabPageAdv2.Size = new System.Drawing.Size(794, 443);
             this.tabPageAdv2.TabFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPageAdv2.TabIndex = 2;
             this.tabPageAdv2.Text = "Tools";
@@ -106,10 +106,10 @@
             this.tabPageAdv3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.tabPageAdv3.Image = global::AdminToolManagementStudio.Properties.Resources.product;
             this.tabPageAdv3.ImageSize = new System.Drawing.Size(32, 32);
-            this.tabPageAdv3.Location = new System.Drawing.Point(74, 1);
+            this.tabPageAdv3.Location = new System.Drawing.Point(0, 1);
             this.tabPageAdv3.Name = "tabPageAdv3";
             this.tabPageAdv3.ShowCloseButton = true;
-            this.tabPageAdv3.Size = new System.Drawing.Size(720, 443);
+            this.tabPageAdv3.Size = new System.Drawing.Size(794, 443);
             this.tabPageAdv3.TabFont = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.tabPageAdv3.TabIndex = 3;
             this.tabPageAdv3.Text = "Order";
@@ -122,10 +122,10 @@
             this.tabPageAdv4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.tabPageAdv4.Image = global::AdminToolManagementStudio.Properties.Resources.Settings;
             this.tabPageAdv4.ImageSize = new System.Drawing.Size(32, 32);
-            this.tabPageAdv4.Location = new System.Drawing.Point(74, 1);
+            this.tabPageAdv4.Location = new System.Drawing.Point(0, 1);
             this.tabPageAdv4.Name = "tabPageAdv4";
             this.tabPageAdv4.ShowCloseButton = true;
-            this.tabPageAdv4.Size = new System.Drawing.Size(720, 443);
+            this.tabPageAdv4.Size = new System.Drawing.Size(794, 443);
             this.tabPageAdv4.TabFont = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.tabPageAdv4.TabIndex = 4;
             this.tabPageAdv4.Text = "Settings";
@@ -148,7 +148,7 @@
             this.tools1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tools1.Location = new System.Drawing.Point(0, 0);
             this.tools1.Name = "tools1";
-            this.tools1.Size = new System.Drawing.Size(720, 443);
+            this.tools1.Size = new System.Drawing.Size(794, 443);
             this.tools1.TabIndex = 0;
             this.tools1.TempMail = null;
             // 
@@ -161,7 +161,7 @@
             this.settings1.Padding = new System.Windows.Forms.Padding(5);
             settings2.TempEmail = "";
             this.settings1.Setting = settings2;
-            this.settings1.Size = new System.Drawing.Size(720, 443);
+            this.settings1.Size = new System.Drawing.Size(794, 443);
             this.settings1.TabIndex = 0;
             // 
             // MainWindow
