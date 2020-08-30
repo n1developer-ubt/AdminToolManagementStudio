@@ -19,6 +19,10 @@ namespace AdminToolManagementStudio.Controls
             InitializeComponent();
         }
 
+        public void LoadSettings(Models.Settings s)
+        {
+            txtTempEmail.Text = s.TempEmail??"";
+        }
         public Models.Settings Setting
         {
             get=>new Models.Settings()

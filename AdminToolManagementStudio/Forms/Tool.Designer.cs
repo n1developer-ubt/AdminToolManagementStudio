@@ -29,42 +29,42 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Syncfusion.Windows.Forms.BannerTextInfo bannerTextInfo1 = new Syncfusion.Windows.Forms.BannerTextInfo();
-            Syncfusion.Windows.Forms.BannerTextInfo bannerTextInfo2 = new Syncfusion.Windows.Forms.BannerTextInfo();
-            Syncfusion.Windows.Forms.BannerTextInfo bannerTextInfo3 = new Syncfusion.Windows.Forms.BannerTextInfo();
-            Syncfusion.Windows.Forms.BannerTextInfo bannerTextInfo4 = new Syncfusion.Windows.Forms.BannerTextInfo();
+            Syncfusion.Windows.Forms.BannerTextInfo bannerTextInfo5 = new Syncfusion.Windows.Forms.BannerTextInfo();
+            Syncfusion.Windows.Forms.BannerTextInfo bannerTextInfo6 = new Syncfusion.Windows.Forms.BannerTextInfo();
+            Syncfusion.Windows.Forms.BannerTextInfo bannerTextInfo7 = new Syncfusion.Windows.Forms.BannerTextInfo();
+            Syncfusion.Windows.Forms.BannerTextInfo bannerTextInfo8 = new Syncfusion.Windows.Forms.BannerTextInfo();
             this.bannerTextProvider1 = new Syncfusion.Windows.Forms.BannerTextProvider(this.components);
             this.txtSmtp = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
+            this.txtUsername = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
+            this.txtPassword = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
+            this.txtProductType = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.btnAction = new Syncfusion.WinForms.Controls.SfButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.txtPort = new Syncfusion.WinForms.Input.SfNumericTextBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.txtUsername = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.txtPassword = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.chkSSL = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.txtPrice = new Syncfusion.WinForms.Input.SfNumericTextBox();
-            this.txtProductType = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             ((System.ComponentModel.ISupportInitialize)(this.txtSmtp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtUsername)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPassword)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtProductType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtUsername)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPassword)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkSSL)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtProductType)).BeginInit();
             this.SuspendLayout();
             // 
             // txtSmtp
             // 
-            bannerTextInfo1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            bannerTextInfo1.Text = "Enter Name";
-            bannerTextInfo1.Visible = true;
-            this.bannerTextProvider1.SetBannerText(this.txtSmtp, bannerTextInfo1);
+            bannerTextInfo5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            bannerTextInfo5.Text = "Host";
+            bannerTextInfo5.Visible = true;
+            this.bannerTextProvider1.SetBannerText(this.txtSmtp, bannerTextInfo5);
             this.txtSmtp.BeforeTouchSize = new System.Drawing.Size(324, 26);
             this.txtSmtp.Dock = System.Windows.Forms.DockStyle.Top;
             this.txtSmtp.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -73,6 +73,51 @@
             this.txtSmtp.Name = "txtSmtp";
             this.txtSmtp.Size = new System.Drawing.Size(324, 26);
             this.txtSmtp.TabIndex = 8;
+            // 
+            // txtUsername
+            // 
+            bannerTextInfo6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            bannerTextInfo6.Text = "Username";
+            bannerTextInfo6.Visible = true;
+            this.bannerTextProvider1.SetBannerText(this.txtUsername, bannerTextInfo6);
+            this.txtUsername.BeforeTouchSize = new System.Drawing.Size(324, 26);
+            this.txtUsername.Dock = System.Windows.Forms.DockStyle.Top;
+            this.txtUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtUsername.Location = new System.Drawing.Point(2, 74);
+            this.txtUsername.Margin = new System.Windows.Forms.Padding(10);
+            this.txtUsername.Name = "txtUsername";
+            this.txtUsername.Size = new System.Drawing.Size(324, 26);
+            this.txtUsername.TabIndex = 16;
+            // 
+            // txtPassword
+            // 
+            bannerTextInfo7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            bannerTextInfo7.Text = "Password";
+            bannerTextInfo7.Visible = true;
+            this.bannerTextProvider1.SetBannerText(this.txtPassword, bannerTextInfo7);
+            this.txtPassword.BeforeTouchSize = new System.Drawing.Size(324, 26);
+            this.txtPassword.Dock = System.Windows.Forms.DockStyle.Top;
+            this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPassword.Location = new System.Drawing.Point(2, 110);
+            this.txtPassword.Margin = new System.Windows.Forms.Padding(10);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Size = new System.Drawing.Size(324, 26);
+            this.txtPassword.TabIndex = 18;
+            // 
+            // txtProductType
+            // 
+            bannerTextInfo8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            bannerTextInfo8.Text = "Product Type";
+            bannerTextInfo8.Visible = true;
+            this.bannerTextProvider1.SetBannerText(this.txtProductType, bannerTextInfo8);
+            this.txtProductType.BeforeTouchSize = new System.Drawing.Size(324, 26);
+            this.txtProductType.Dock = System.Windows.Forms.DockStyle.Top;
+            this.txtProductType.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtProductType.Location = new System.Drawing.Point(2, 213);
+            this.txtProductType.Margin = new System.Windows.Forms.Padding(10);
+            this.txtProductType.Name = "txtProductType";
+            this.txtProductType.Size = new System.Drawing.Size(324, 26);
+            this.txtProductType.TabIndex = 23;
             // 
             // btnAction
             // 
@@ -138,21 +183,6 @@
             this.pictureBox3.TabIndex = 17;
             this.pictureBox3.TabStop = false;
             // 
-            // txtUsername
-            // 
-            bannerTextInfo2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            bannerTextInfo2.Text = "Username";
-            bannerTextInfo2.Visible = true;
-            this.bannerTextProvider1.SetBannerText(this.txtUsername, bannerTextInfo2);
-            this.txtUsername.BeforeTouchSize = new System.Drawing.Size(324, 26);
-            this.txtUsername.Dock = System.Windows.Forms.DockStyle.Top;
-            this.txtUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUsername.Location = new System.Drawing.Point(2, 74);
-            this.txtUsername.Margin = new System.Windows.Forms.Padding(10);
-            this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(324, 26);
-            this.txtUsername.TabIndex = 16;
-            // 
             // pictureBox4
             // 
             this.pictureBox4.Dock = System.Windows.Forms.DockStyle.Top;
@@ -161,21 +191,6 @@
             this.pictureBox4.Size = new System.Drawing.Size(324, 10);
             this.pictureBox4.TabIndex = 19;
             this.pictureBox4.TabStop = false;
-            // 
-            // txtPassword
-            // 
-            bannerTextInfo3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            bannerTextInfo3.Text = "Password";
-            bannerTextInfo3.Visible = true;
-            this.bannerTextProvider1.SetBannerText(this.txtPassword, bannerTextInfo3);
-            this.txtPassword.BeforeTouchSize = new System.Drawing.Size(324, 26);
-            this.txtPassword.Dock = System.Windows.Forms.DockStyle.Top;
-            this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPassword.Location = new System.Drawing.Point(2, 110);
-            this.txtPassword.Margin = new System.Windows.Forms.Padding(10);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(324, 26);
-            this.txtPassword.TabIndex = 18;
             // 
             // chkSSL
             // 
@@ -220,21 +235,6 @@
             this.txtPrice.Value = 1D;
             this.txtPrice.WatermarkText = "Port";
             // 
-            // txtProductType
-            // 
-            bannerTextInfo4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            bannerTextInfo4.Text = "Product Type";
-            bannerTextInfo4.Visible = true;
-            this.bannerTextProvider1.SetBannerText(this.txtProductType, bannerTextInfo4);
-            this.txtProductType.BeforeTouchSize = new System.Drawing.Size(324, 26);
-            this.txtProductType.Dock = System.Windows.Forms.DockStyle.Top;
-            this.txtProductType.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProductType.Location = new System.Drawing.Point(2, 213);
-            this.txtProductType.Margin = new System.Windows.Forms.Padding(10);
-            this.txtProductType.Name = "txtProductType";
-            this.txtProductType.Size = new System.Drawing.Size(324, 26);
-            this.txtProductType.TabIndex = 23;
-            // 
             // Tool
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -254,17 +254,18 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.txtSmtp);
             this.Name = "Tool";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add New Tool";
             ((System.ComponentModel.ISupportInitialize)(this.txtSmtp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtUsername)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPassword)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtProductType)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtUsername)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPassword)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkSSL)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtProductType)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

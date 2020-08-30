@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -34,6 +35,15 @@ namespace AdminToolManagementStudio.Controls
                 return;
 
             DbContext.Tools.Load();
+
+            try
+            {
+                
+            }
+            catch (Exception e)
+            {
+                
+            }
 
             sdgTools.DataSource = DbContext.Tools.Local.ToBindingList();
         }
@@ -88,7 +98,6 @@ namespace AdminToolManagementStudio.Controls
 
         private bool Pause = false;
         
-
         private async void btnUpdateStatus_Click(object sender, EventArgs e)
         {
             if (!(sender is Control c))
@@ -105,28 +114,49 @@ namespace AdminToolManagementStudio.Controls
                         Pause = false;
                         break;
                     }
+
+                    tool.Status = ToolStatus.Checking.ToString();
+                    sdgTools.Refresh();
                     var result = await GetUpdatedStatus(tool);
                     tool.Status = result.ToString();
-                    MessageBox.Show(result.ToString());
+                    sdgTools.Refresh();
                 }
 
+                await DbContext.SaveChangesAsync();
+                
                 c.Text = "Update All";
+                EnableAllOnUpdate(true);
+                c.Enabled = true;
             }
             else
             {
                 c.Enabled = false;
                 Pause = true;
-                while (Pause) ;
-                c.Text = "Update All";
-                c.Enabled = true;
             }
         }
 
         public string TempMail { get; set; }
 
+        private bool IsEmail(string emailAddress)
+        {
+            try
+            {
+                new MailAddress(emailAddress);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
         private async Task<ToolStatus> GetUpdatedStatus(Models.Tool t)
         {
-            ToolStatus Result = ToolStatus.Working;
+            if (!IsEmail(t.Username))
+                return ToolStatus.NotWorking;
+
+            var result = ToolStatus.Working;
+
             await Task.Run(() =>
             {
                 using (SmtpClient c = new SmtpClient(t.Smtp, t.Port))
@@ -134,20 +164,26 @@ namespace AdminToolManagementStudio.Controls
                     try
                     {
                         c.Credentials = new NetworkCredential(t.Username, t.Password);
-
-                        c.Send(t.Username, TempMail, "Test", "Testing");
+                        c.EnableSsl = t.Ssl;
+                        c.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        var m = new MailMessage();
+                        m.From = new MailAddress(t.Username, t.Username.Split('@')[0]);
+                        m.To.Add(TempMail);
+                        m.Subject = "Test";
+                        m.Body = "test";
+                        c.Send(m);
                     }
                     catch (SmtpException e)
                     {
-                        Result = ToolStatus.NotWorking;
+                        result = ToolStatus.NotWorking;
                     }
                     catch (Exception e)
                     {
-                        Result = ToolStatus.Unknown;
+                        result = ToolStatus.Unknown;
                     }
                 }
             });
-            return Result;
+            return result;
         }
 
         private void EnableAllOnUpdate(bool enable)
@@ -174,18 +210,109 @@ namespace AdminToolManagementStudio.Controls
                 e.Style.TextColor = Color.Black;
                 e.Style.BackColor = Color.White;
             }
-
             else if (d.Status.Equals(ToolStatus.Working.ToString()))
             {
                 e.Style.TextColor = Color.White;
                 e.Style.BackColor = Color.Green;
             }
-
             else if (d.Status.Equals(ToolStatus.NotWorking.ToString()))
             {
                 e.Style.TextColor = Color.White;
                 e.Style.BackColor = Color.Red;
             }
+            else if (d.Status.Equals(ToolStatus.Checking.ToString()))
+            {
+                e.Style.TextColor = Color.White;
+                e.Style.BackColor = Color.DodgerBlue;
+            }
+        }
+
+        private async void btnImportFile_Click(object sender, EventArgs e)
+        {
+            using (var f = new OpenFileDialog())
+            {
+                f.Filter = "Text File(*.txt)|*.txt";
+                f.Multiselect = false;
+
+                if (f.ShowDialog() == DialogResult.OK)
+                {
+                    var lines = File.ReadAllLines(f.FileName);
+
+                    if (lines.Length > 0)
+                    {
+                        foreach (var line in lines)
+                        {
+                            var t = ParseTool(line);
+
+                            if (t == null) continue;
+
+                            DbContext.Tools.Add(t);
+                        }
+
+                        await DbContext.SaveChangesAsync();
+                    }
+                }
+            }
+        }
+
+        private Models.Tool ParseTool(string str)
+        { 
+            var s = str.Split('|');
+            s = s.Select(x => x.Trim()).ToArray();
+            try
+            {
+                return new Models.Tool(){
+                    Smtp = s[0],
+                    Port = Convert.ToInt16(s[1]),
+                    Username = s[2],
+                    Password = s[3],
+                    Status = ToolStatus.Unknown.ToString(),
+                    Ssl = s[4].ToLower().Equals("ssl"),
+                    Price = Convert.ToInt32(s[5])
+                };
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        private bool UpdatingStatus = false;
+
+        private async void sdgTools_CellButtonClick(object sender, Syncfusion.WinForms.DataGrid.Events.CellButtonClickEventArgs e)
+        {
+
+            if (e.Column.HeaderText.ToLower().Equals("check status"))
+            {
+                if (UpdatingStatus)
+                    return;
+
+                UpdatingStatus = true;
+
+                var rr = (Models.Tool)sdgTools.GetRecordAtRowIndex(e.RowIndex);
+
+                rr.Status = ToolStatus.Checking.ToString();
+
+                sdgTools.Refresh();
+
+                rr.Status = (await GetUpdatedStatus(rr)).ToString();
+
+                UpdatingStatus = false;
+
+                sdgTools.Refresh();
+
+                return;
+            }
+
+            var r = (Models.Tool) sdgTools.GetRecordAtRowIndex(e.RowIndex);
+
+            if (r == null)
+                return;
+
+            DbContext.Tools.Remove(r);
+
+            await DbContext.SaveChangesAsync();
+
         }
     }
 
@@ -193,6 +320,7 @@ namespace AdminToolManagementStudio.Controls
     {
         Unknown,
         Working,
-        NotWorking
+        NotWorking,
+        Checking
     }
 }
