@@ -7,14 +7,7 @@ namespace AdminToolManagementStudio.DatabaseContext
 {
     public class CustomerDbContext:DbContext
     {
-        private static readonly MySqlConnectionStringBuilder ConnectionStringBuilder = new MySqlConnectionStringBuilder()
-            {
-                Server = "localhost",
-                Port = 3306,
-                UserID = "root",
-                Password = "",
-                Database = "WCDToolManagement"
-            };
+        public static MySqlConnectionStringBuilder ConnectionStringBuilder;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql(ConnectionStringBuilder.ConnectionString);

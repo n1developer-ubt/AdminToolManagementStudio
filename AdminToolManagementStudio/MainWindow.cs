@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using AdminToolManagementStudio.DatabaseContext;
 using AdminToolManagementStudio.Models;
 using EnvDTE;
+using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using Syncfusion.WinForms.Controls;
 
@@ -17,19 +18,83 @@ namespace AdminToolManagementStudio
 {
     public partial class MainWindow : SfForm
     {
-        private readonly CustomerDbContext _dbContext;
+        private static MySqlConnectionStringBuilder ConnectionStringBuilder;
+
         public MainWindow()
         {
             InitializeComponent();
-            _dbContext = new CustomerDbContext();
-            //_dbContext.Database.EnsureDeleted();
-            _dbContext.Database.EnsureCreated();
-            settings1.SettingsUpdated+=Settings1OnSettingsUpdated;
-            users1.DbContext = _dbContext;
-            tools1.DbContext = _dbContext;
-            users1.LoadAll();
-            tools1.LoadAll();
+            settings1.SettingsUpdated += Settings1OnSettingsUpdated;
             LoadSettings();
+            var result = ConfigureDatabase();
+
+            switch (result)
+            {
+                case DatabaseStatus.ConnectionError:
+                    MessageBox.Show("Connection To Database Failed! Configure Settings", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+                case DatabaseStatus.Unknown:
+                    MessageBox.Show("Unknow Error, Contact Admin!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+                case DatabaseStatus.ConfigureDatabaseSetting:
+                    MessageBox.Show("Please Configure Database Setting!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+            }
+        }
+
+        enum DatabaseStatus
+        {
+            ConfigureDatabaseSetting,
+            ConnectionError,
+            Unknown,
+            Ok
+        }
+
+        private DatabaseStatus ConfigureDatabase()
+        {
+            if (_setting.DatabaseInfo == null) return DatabaseStatus.ConfigureDatabaseSetting;
+
+            try
+            {
+                CustomerDbContext.ConnectionStringBuilder=new MySqlConnectionStringBuilder()
+                {
+                    Server = _setting.DatabaseInfo.Host,
+                    Port = Convert.ToUInt16(_setting.DatabaseInfo.Port),
+                    UserID = _setting.DatabaseInfo.Username,
+                    Password = _setting.DatabaseInfo.Password,
+                    Database = _setting.DatabaseInfo.DatabaseName
+                };
+            }
+            catch (Exception e)
+            {
+                return DatabaseStatus.ConfigureDatabaseSetting;
+            }
+
+            CustomerDbContext dbContext = null;
+
+            try
+            {
+                dbContext = new CustomerDbContext();
+                //_dbContext.Database.EnsureDeleted();
+                dbContext.Database.EnsureCreated();
+            }
+            catch (Exception e)
+            {
+                return DatabaseStatus.ConnectionError;
+            }
+
+            try
+            {
+                users1.DbContext = dbContext;
+                tools1.DbContext = dbContext;
+                users1.LoadAll();
+                tools1.LoadAll();
+            }
+            catch (Exception e)
+            {
+                return DatabaseStatus.Unknown;
+            }
+
+            return DatabaseStatus.Ok;
         }
 
         private void SaveSetting()
@@ -51,6 +116,7 @@ namespace AdminToolManagementStudio
         private void UpdateSetting()
         {
             tools1.TempMail = _setting.TempEmail;
+            ConfigureDatabase();
         }
 
         private Settings _setting;
@@ -59,21 +125,6 @@ namespace AdminToolManagementStudio
             _setting = newSettings;
             SaveSetting();
             UpdateSetting();
-        }
-
-        private void tabControlAdv1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabPageAdv1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabPageAdv2_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

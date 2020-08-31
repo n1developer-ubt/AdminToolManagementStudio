@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminToolManagementStudio", "AdminToolManagementStudio\AdminToolManagementStudio.csproj", "{61DE5D92-D37C-4DBE-8624-E0A5243A7DCB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolsMarket", "ToolsMarket\ToolsMarket.csproj", "{4F22092D-4BD9-4A6B-B48A-3D3CDBFE0333}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{61DE5D92-D37C-4DBE-8624-E0A5243A7DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61DE5D92-D37C-4DBE-8624-E0A5243A7DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61DE5D92-D37C-4DBE-8624-E0A5243A7DCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F22092D-4BD9-4A6B-B48A-3D3CDBFE0333}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F22092D-4BD9-4A6B-B48A-3D3CDBFE0333}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F22092D-4BD9-4A6B-B48A-3D3CDBFE0333}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F22092D-4BD9-4A6B-B48A-3D3CDBFE0333}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
