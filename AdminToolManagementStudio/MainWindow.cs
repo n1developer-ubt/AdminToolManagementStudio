@@ -86,6 +86,8 @@ namespace AdminToolManagementStudio
             {
                 users1.DbContext = dbContext;
                 tools1.DbContext = dbContext;
+                order1.DbContext = dbContext;
+                order1.LoadAll();
                 users1.LoadAll();
                 tools1.LoadAll();
             }

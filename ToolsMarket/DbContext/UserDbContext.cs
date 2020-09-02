@@ -12,6 +12,8 @@ namespace ToolsMarket.DbContext
     public class UserDbContext:Microsoft.EntityFrameworkCore.DbContext
     {
         public DbSet<Customer> Customers  { get; set; }
+        public DbSet<Tool> Tools  { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

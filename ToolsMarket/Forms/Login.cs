@@ -13,13 +13,14 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Syncfusion.WinForms.Controls;
 using ToolsMarket.DbContext;
+using ToolsMarket.Models;
 using ToolsMarket.Properties;
 
 namespace ToolsMarket.Forms
 {
     public partial class Login : SfForm
     {
-        private readonly UserDbContext DbContext;
+        private readonly UserDbContext _dbContext;
         public Login()
         {
             InitializeComponent();
@@ -27,7 +28,7 @@ namespace ToolsMarket.Forms
 
             try
             {
-                DbContext = new UserDbContext();
+                _dbContext = new UserDbContext();
             }
             catch (Exception e)
             {
@@ -64,7 +65,7 @@ namespace ToolsMarket.Forms
             c.Enabled = false;
             c.Text = "Logging in!";
 
-            var u = await DbContext.Customers.SingleOrDefaultAsync(s => s.Email.Equals(txtUsername.Text.Trim()));
+            var u = await _dbContext.Customers.SingleOrDefaultAsync(s => s.Email.Equals(txtUsername.Text.Trim()));
 
             c.Enabled = true;
             c.Text = "Login";
@@ -90,10 +91,14 @@ namespace ToolsMarket.Forms
             Settings.Default.LoginSettings = JsonConvert.SerializeObject(sx);
             Settings.Default.Save();
 
-            System.Threading.Thread t = new System.Threading.Thread(() => { Application.Run(new MainWindow()); });
-            t.SetApartmentState(ApartmentState.STA);
-            t.Start();
-            Close();
+            Customer.CurrentCustomer = u;
+
+            var w = new MainWindow();w.ShowDialog();
+
+            //System.Threading.Thread t = new System.Threading.Thread(() => { Application.Run(new MainWindow()); });
+            //t.SetApartmentState(ApartmentState.STA);
+            //t.Start();
+            //Close();
         }
     }
 

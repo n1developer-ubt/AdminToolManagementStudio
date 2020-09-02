@@ -4,6 +4,9 @@ namespace ToolsMarket.Models
 {
     public class Customer
     {
+
+        public static Customer CurrentCustomer { get; set; }
+
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }

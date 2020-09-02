@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ToolsMarket.Forms;
+using ToolsMarket.Models;
 
 namespace ToolsMarket
 {
@@ -16,8 +17,15 @@ namespace ToolsMarket
         static void Main()
         {
             Application.EnableVisualStyles();
+            
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Login());
+
+            Customer.CurrentCustomer = new Customer()
+            {
+                Id = 2
+            };
+
+            Application.Run(new MainWindow());
         }
     }
 }

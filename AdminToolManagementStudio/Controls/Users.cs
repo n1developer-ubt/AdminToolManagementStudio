@@ -65,8 +65,14 @@ namespace AdminToolManagementStudio.Controls
         {
             if (DbContext == null)
                 return;
-
-            await DbContext?.SaveChangesAsync();
+            try
+            {
+                await DbContext?.SaveChangesAsync();
+            }
+            catch (Exception exception)
+            {
+                
+            }
         }
 
         private async void btnSaveChanges_Click(object sender, EventArgs e)
