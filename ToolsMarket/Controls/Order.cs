@@ -72,33 +72,50 @@ namespace ToolsMarket.Controls
             }
         }
 
-        public async Task LoadAll()
+        public void LoadAll()
         {
             if(DbContext == null) return;
 
-            var orders = await DbContext.Orders.AsNoTracking().Include(x => x.Customer).Include(x => x.Tool).Where(o=>o.Customer.Id == Customer.CurrentCustomer.Id).ToListAsync();
+            try
+            {
+                DbContext.Orders.Load();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                //DbContext = new UserDbContext();
+                //DbContext.Orders.Load();
+            }
+            var orders = DbContext.Orders.AsNoTracking().Include(x=>x.Customer).Include(x=>x.Tool).Where(o=>o.Customer.Id == Customer.CurrentCustomer.Id).ToList();
 
             //MessageBox.Show(orders.Count + "");
 
             orders.ForEach(order =>
             {
-                if (order.OrderStatus != OrderStatus.Accepted)
+                try
                 {
-                    order.Tool.Password = "******************";
-                    order.Tool.Username = "******************";
+                    if (order.OrderStatus != OrderStatus.Accepted)
+                    {
+                        order.Tool.Password = "******************";
+                        order.Tool.Username = "******************";
+                    }
+                }
+                catch (Exception e)
+                {
+                    
                 }
             });
 
             sfDataGrid1.DataSource = orders;
         }
 
-        private async void btnReload_Click(object sender, EventArgs e)
+        private void btnReload_Click(object sender, EventArgs e)
         {
             if(!(sender is Control c)) return;
 
             c.Enabled = false;
 
-            await LoadAll();
+            LoadAll();
 
             c.Enabled = true;
         }

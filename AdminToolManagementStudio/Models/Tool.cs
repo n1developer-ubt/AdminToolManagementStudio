@@ -20,5 +20,6 @@ namespace AdminToolManagementStudio.Models
         public  string Status { get; set; }
         public int Price { get; set; }
         public string Type { get; set; }
+        public bool Purchased { get; set; }
     }
 }

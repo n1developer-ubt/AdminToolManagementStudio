@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             Syncfusion.Windows.Forms.BannerTextInfo bannerTextInfo1 = new Syncfusion.Windows.Forms.BannerTextInfo();
             Syncfusion.Windows.Forms.BannerTextInfo bannerTextInfo2 = new Syncfusion.Windows.Forms.BannerTextInfo();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.txtUsername = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPassword = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
@@ -53,7 +54,7 @@
             this.txtUsername.Location = new System.Drawing.Point(5, 70);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(240, 26);
-            this.txtUsername.TabIndex = 0;
+            this.txtUsername.TabIndex = 1;
             // 
             // label1
             // 
@@ -77,7 +78,7 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(240, 26);
-            this.txtPassword.TabIndex = 0;
+            this.txtPassword.TabIndex = 2;
             // 
             // btnLogin
             // 
@@ -87,6 +88,7 @@
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(96, 28);
             this.btnLogin.TabIndex = 2;
+            this.btnLogin.TabStop = false;
             this.btnLogin.Text = "Login";
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
@@ -104,6 +106,7 @@
             this.chkRememberMe.Size = new System.Drawing.Size(150, 21);
             this.chkRememberMe.Style = Syncfusion.Windows.Forms.Tools.CheckBoxAdvStyle.Office2016Colorful;
             this.chkRememberMe.TabIndex = 3;
+            this.chkRememberMe.TabStop = false;
             this.chkRememberMe.Text = "Remember me";
             this.chkRememberMe.ThemeName = "Office2016Colorful";
             // 
@@ -118,6 +121,10 @@
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUsername);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(266, 350);
+            this.MinimumSize = new System.Drawing.Size(266, 350);
             this.Name = "Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";

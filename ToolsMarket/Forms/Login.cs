@@ -29,9 +29,11 @@ namespace ToolsMarket.Forms
             try
             {
                 _dbContext = new UserDbContext();
+                //_dbContext.Database.ena
             }
             catch (Exception e)
             {
+                _dbContext = null;
                 MessageBox.Show("Server is down at this time, try again letter!");
                 return;
             }
@@ -52,7 +54,11 @@ namespace ToolsMarket.Forms
 
         private async void btnLogin_Click(object sender, EventArgs e)
         {
-
+            if (_dbContext == null)
+            {
+                MessageBox.Show("Error, Contact admin!");
+                return;
+            }
             if (!(sender is Control c)) return;
 
             var sx = new LoginSettings
@@ -93,12 +99,12 @@ namespace ToolsMarket.Forms
 
             Customer.CurrentCustomer = u;
 
-            var w = new MainWindow();w.ShowDialog();
-
-            //System.Threading.Thread t = new System.Threading.Thread(() => { Application.Run(new MainWindow()); });
-            //t.SetApartmentState(ApartmentState.STA);
-            //t.Start();
-            //Close();
+            //var win = new MainWindow();
+            //win.ShowDialog();
+            System.Threading.Thread t = new System.Threading.Thread(() => { Application.Run(new MainWindow()); });
+            t.SetApartmentState(ApartmentState.STA);
+            t.Start();
+            Close();
         }
     }
 

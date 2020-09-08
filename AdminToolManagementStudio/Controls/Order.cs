@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using AdminToolManagementStudio.DatabaseContext;
 using AdminToolManagementStudio.Models;
@@ -146,9 +147,21 @@ namespace AdminToolManagementStudio.Controls
             sdgOrders.SearchController.Search((sender as TextBoxExt).Text);
         }
 
-        private  async void sfDataGrid1_CellButtonClick(object sender, CellButtonClickEventArgs e)
+        private async void sfDataGrid1_CellButtonClick(object sender, CellButtonClickEventArgs e)
         {
-            var r = (Models.Order) sdgOrders.GetRecordAtRowIndex(e.RowIndex);
+            try
+            {
+                await Check(sender, e);
+            }
+            catch (Exception exception)
+            {
+                
+            }
+        }
+
+        private async Task Check(object sender, CellButtonClickEventArgs e)
+        {
+            var r = (Models.Order)sdgOrders.GetRecordAtRowIndex(e.RowIndex);
 
             if (r == null)
                 return;

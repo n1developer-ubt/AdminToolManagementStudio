@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
@@ -12,8 +13,10 @@ using System.Windows.Forms;
 using AdminToolManagementStudio.DatabaseContext;
 using AdminToolManagementStudio.Forms;
 using Microsoft.EntityFrameworkCore;
+using Syncfusion.Data.Extensions;
 using Syncfusion.Windows.Forms.Tools;
 using Syncfusion.WinForms.Controls;
+using Syncfusion.WinForms.DataGrid;
 using Syncfusion.WinForms.DataGrid.Interactivity;
 
 namespace AdminToolManagementStudio.Controls
@@ -117,6 +120,10 @@ namespace AdminToolManagementStudio.Controls
                     tool.Status = ToolStatus.Checking.ToString();
                     sdgTools.Refresh();
                     var result = await GetUpdatedStatus(tool);
+
+                    if (result == ToolStatus.Error)
+                        break;
+
                     tool.Status = result.ToString();
                     sdgTools.Refresh();
                 }
@@ -151,6 +158,12 @@ namespace AdminToolManagementStudio.Controls
 
         private async Task<ToolStatus> GetUpdatedStatus(Models.Tool t)
         {
+            if (!IsEmail(TempMail))
+            {
+                MessageBox.Show("Temp Email Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return ToolStatus.Error;
+            }
+
             if (!IsEmail(t.Username))
                 return ToolStatus.NotWorking;
 
@@ -278,13 +291,22 @@ namespace AdminToolManagementStudio.Controls
 
         private bool UpdatingStatus = false;
 
+        private bool IsWorking = false;
+
         private async void sdgTools_CellButtonClick(object sender, Syncfusion.WinForms.DataGrid.Events.CellButtonClickEventArgs e)
         {
+            if (IsWorking)
+                return;
+
+            IsWorking = true;
 
             if (e.Column.HeaderText.ToLower().Equals("check status"))
             {
                 if (UpdatingStatus)
+                {
+                    IsWorking = false;
                     return;
+                }
 
                 UpdatingStatus = true;
 
@@ -293,12 +315,21 @@ namespace AdminToolManagementStudio.Controls
                 rr.Status = ToolStatus.Checking.ToString();
 
                 sdgTools.Refresh();
+                var result = await GetUpdatedStatus(rr);
 
-                rr.Status = (await GetUpdatedStatus(rr)).ToString();
+                if (result == ToolStatus.Error)
+                {
+                    IsWorking = false;
+                    return;
+                }
+
+                rr.Status = (result).ToString();
 
                 UpdatingStatus = false;
 
                 sdgTools.Refresh();
+
+                IsWorking = false;
 
                 return;
             }
@@ -306,20 +337,16 @@ namespace AdminToolManagementStudio.Controls
             var r = (Models.Tool) sdgTools.GetRecordAtRowIndex(e.RowIndex);
 
             if (r == null)
+            {
+                IsWorking = false;
                 return;
+            }
 
             DbContext.Tools.Remove(r);
 
             await DbContext.SaveChangesAsync();
-
+            IsWorking = false;
         }
     }
 
-    public enum ToolStatus
-    {
-        Unknown,
-        Working,
-        NotWorking,
-        Checking
-    }
 }

@@ -10,7 +10,7 @@ namespace AdminToolManagementStudio.DatabaseContext
         public static MySqlConnectionStringBuilder ConnectionStringBuilder;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql(ConnectionStringBuilder.ConnectionString);
+            optionsBuilder.UseMySql(ConnectionStringBuilder.ConnectionString, o => { o.EnableRetryOnFailure(5); });
             base.OnConfiguring(optionsBuilder);
         }
 

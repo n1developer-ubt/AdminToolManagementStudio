@@ -25,7 +25,7 @@ namespace ToolsMarket
                 Id = 2
             };
 
-            Application.Run(new MainWindow());
+            Application.Run(new Login());
         }
     }
 }

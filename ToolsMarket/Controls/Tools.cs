@@ -32,7 +32,7 @@ namespace ToolsMarket.Controls
 
             DbContext.Tools.Load();
 
-            var tools = DbContext.Tools.AsNoTracking().ToList();
+            var tools = DbContext.Tools.ToList();
 
             tools.ForEach(t =>
             {
@@ -49,7 +49,7 @@ namespace ToolsMarket.Controls
 
             try
             {
-                sdgTools.DataSource = null;
+                //sdgTools.DataSource = null;
                 sdgTools.DataSource = tools;
             }
             catch (Exception e)

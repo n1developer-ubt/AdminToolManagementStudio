@@ -23,22 +23,52 @@ namespace AdminToolManagementStudio
         public MainWindow()
         {
             InitializeComponent();
+            CheckForIllegalCrossThreadCalls = false;
             settings1.SettingsUpdated += Settings1OnSettingsUpdated;
             LoadSettings();
-            var result = ConfigureDatabase();
+            CheckDatabase();
+        }
 
-            switch (result)
+        private void EnableAll(bool enable)
+        {
+            tools1.Enabled = enable;
+            users1.Enabled = enable;
+            order1.Enabled = enable;
+        }
+
+        private void CheckDatabase()
+        {
+            Task.Run(() =>
             {
-                case DatabaseStatus.ConnectionError:
-                    MessageBox.Show("Connection To Database Failed! Configure Settings", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    break;
-                case DatabaseStatus.Unknown:
-                    MessageBox.Show("Unknow Error, Contact Admin!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    break;
-                case DatabaseStatus.ConfigureDatabaseSetting:
-                    MessageBox.Show("Please Configure Database Setting!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    break;
-            }
+                EnableAll(false);
+                Text = "Admin Management - Loading";
+                var result = ConfigureDatabase();
+
+                Invoke(new Action(() => {
+                    switch (result)
+                    {
+                        case DatabaseStatus.ConnectionError:
+                            MessageBox.Show("Connection To Database Failed! Configure Settings", "Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            break;
+                        case DatabaseStatus.Unknown:
+                            MessageBox.Show("Unknow Error, Contact Admin!", "Error", MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                            break;
+                        case DatabaseStatus.ConfigureDatabaseSetting:
+                            MessageBox.Show("Please Configure Database Setting!", "Error", MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                            break;
+                    }
+                }));
+                
+                Text = "Admin Management - Error";
+                if (result == DatabaseStatus.Ok)
+                {
+                    EnableAll(true);
+                    Text = "Admin Management - Connected";
+                }
+            });
         }
 
         enum DatabaseStatus
@@ -51,7 +81,31 @@ namespace AdminToolManagementStudio
 
         private DatabaseStatus ConfigureDatabase()
         {
-            if (_setting.DatabaseInfo == null) return DatabaseStatus.ConfigureDatabaseSetting;
+            _setting.DatabaseInfo = new DatabaseInfo()
+            {
+                DatabaseName = "sql12363680",
+                Username = "sql12363680",
+                Port = "3306",
+                Host = "sql12.freemysqlhosting.net",
+                Password = "TJpzhECnwq"
+            };
+            if (_setting.DatabaseInfo == null)
+            {
+                _setting.DatabaseInfo = new DatabaseInfo(){
+                    DatabaseName = "sql12363680",
+                    Username = "sql12363680",
+                    Port = "3306",
+                    Host = " sql12.freemysqlhosting.net",
+                    Password = "TJpzhECnwq"
+                };
+                //_setting.DatabaseInfo = new DatabaseInfo(){
+                //    DatabaseName = "admin_usa",
+                //    Username = "admin_usa",
+                //    Port = "3306",
+                //    Host = "191.101.164.254",
+                //    Password = "S7hSaHHQI1"
+                //};
+            }
 
             try
             {
@@ -69,6 +123,7 @@ namespace AdminToolManagementStudio
                 return DatabaseStatus.ConfigureDatabaseSetting;
             }
 
+            //MessageBox.Show(JsonConvert.SerializeObject(CustomerDbContext.ConnectionStringBuilder));
             CustomerDbContext dbContext = null;
 
             try
@@ -108,7 +163,10 @@ namespace AdminToolManagementStudio
         private void LoadSettings()
         {
             if (Properties.Settings.Default.AppSettings.Equals(""))
+            {
+                _setting = new Settings();
                 return;
+            }
 
             _setting = JsonConvert.DeserializeObject<Settings>(Properties.Settings.Default.AppSettings);
             tools1.TempMail = _setting.TempEmail;
@@ -118,7 +176,7 @@ namespace AdminToolManagementStudio
         private void UpdateSetting()
         {
             tools1.TempMail = _setting.TempEmail;
-            ConfigureDatabase();
+            CheckDatabase();
         }
 
         private Settings _setting;

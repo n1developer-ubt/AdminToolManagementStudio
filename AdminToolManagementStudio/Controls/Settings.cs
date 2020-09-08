@@ -23,6 +23,15 @@ namespace AdminToolManagementStudio.Controls
         public void LoadSettings(Models.Settings s)
         {
             txtTempEmail.Text = s.TempEmail??"";
+
+            if (s.DatabaseInfo == null)
+                return;
+
+            txtPassword.Text = s.DatabaseInfo.Password;
+            txtUsername.Text = s.DatabaseInfo.Username;
+            txtHost.Text = s.DatabaseInfo.Host;
+            txtPort.Text = s.DatabaseInfo.Port;
+            txtDatabaseName.Text = s.DatabaseInfo.DatabaseName;
         }
         public Models.Settings Setting
         {

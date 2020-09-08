@@ -30,6 +30,7 @@
         {
             AdminToolManagementStudio.Models.Settings settings2 = new AdminToolManagementStudio.Models.Settings();
             AdminToolManagementStudio.Models.DatabaseInfo databaseInfo1 = new AdminToolManagementStudio.Models.DatabaseInfo();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.tabControlAdv1 = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
             this.tabPageAdv1 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.users1 = new AdminToolManagementStudio.Controls.Users();
@@ -186,6 +187,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.tabControlAdv1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWindow";
             this.Text = "Admin Management";
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).EndInit();
