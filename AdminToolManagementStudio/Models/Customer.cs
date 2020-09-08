@@ -15,5 +15,6 @@ namespace AdminToolManagementStudio.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public bool IsBlocked { get; set; }
+        public List<Ticket> Tickets { get; set; }
     }
 }

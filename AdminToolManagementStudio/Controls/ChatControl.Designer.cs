@@ -31,10 +31,10 @@
             this.components = new System.ComponentModel.Container();
             Syncfusion.Windows.Forms.BannerTextInfo bannerTextInfo1 = new Syncfusion.Windows.Forms.BannerTextInfo();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.stackPanel1 = new AdminToolManagementStudio.Controls.StackPanel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.pnlMessages = new System.Windows.Forms.Panel();
-            this.btnSend = new Syncfusion.WinForms.Controls.SfButton();
             this.txtNewMessage = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
+            this.btnSend = new Syncfusion.WinForms.Controls.SfButton();
             this.bannerTextProvider1 = new Syncfusion.Windows.Forms.BannerTextProvider(this.components);
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -43,39 +43,56 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.pnlMessages);
+            this.panel1.Controls.Add(this.stackPanel1);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(663, 413);
+            this.panel1.Size = new System.Drawing.Size(655, 466);
             this.panel1.TabIndex = 0;
+            // 
+            // stackPanel1
+            // 
+            this.stackPanel1.AutoScroll = true;
+            this.stackPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.stackPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.stackPanel1.Location = new System.Drawing.Point(0, 0);
+            this.stackPanel1.Name = "stackPanel1";
+            this.stackPanel1.Size = new System.Drawing.Size(655, 403);
+            this.stackPanel1.TabIndex = 2;
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.txtNewMessage);
             this.panel2.Controls.Add(this.btnSend);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 350);
+            this.panel2.Location = new System.Drawing.Point(0, 403);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(5);
-            this.panel2.Size = new System.Drawing.Size(663, 63);
+            this.panel2.Size = new System.Drawing.Size(655, 63);
             this.panel2.TabIndex = 1;
             // 
-            // pnlMessages
+            // txtNewMessage
             // 
-            this.pnlMessages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMessages.Location = new System.Drawing.Point(0, 0);
-            this.pnlMessages.Name = "pnlMessages";
-            this.pnlMessages.Size = new System.Drawing.Size(663, 350);
-            this.pnlMessages.TabIndex = 2;
+            bannerTextInfo1.Mode = Syncfusion.Windows.Forms.BannerTextMode.EditMode;
+            bannerTextInfo1.Text = "Type Message Here";
+            bannerTextInfo1.Visible = true;
+            this.bannerTextProvider1.SetBannerText(this.txtNewMessage, bannerTextInfo1);
+            this.txtNewMessage.BeforeTouchSize = new System.Drawing.Size(552, 53);
+            this.txtNewMessage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtNewMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNewMessage.Location = new System.Drawing.Point(5, 5);
+            this.txtNewMessage.Multiline = true;
+            this.txtNewMessage.Name = "txtNewMessage";
+            this.txtNewMessage.Size = new System.Drawing.Size(552, 53);
+            this.txtNewMessage.TabIndex = 5;
             // 
             // btnSend
             // 
             this.btnSend.AccessibleName = "Button";
             this.btnSend.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnSend.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            this.btnSend.Location = new System.Drawing.Point(565, 5);
+            this.btnSend.Location = new System.Drawing.Point(557, 5);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(93, 53);
             this.btnSend.Style.BackColor = System.Drawing.Color.Green;
@@ -88,21 +105,7 @@
             this.btnSend.Style.PressedForeColor = System.Drawing.Color.White;
             this.btnSend.TabIndex = 4;
             this.btnSend.Text = "Send";
-            // 
-            // txtNewMessage
-            // 
-            bannerTextInfo1.Mode = Syncfusion.Windows.Forms.BannerTextMode.EditMode;
-            bannerTextInfo1.Text = "Type Message Here";
-            bannerTextInfo1.Visible = true;
-            this.bannerTextProvider1.SetBannerText(this.txtNewMessage, bannerTextInfo1);
-            this.txtNewMessage.BeforeTouchSize = new System.Drawing.Size(560, 53);
-            this.txtNewMessage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtNewMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNewMessage.Location = new System.Drawing.Point(5, 5);
-            this.txtNewMessage.Multiline = true;
-            this.txtNewMessage.Name = "txtNewMessage";
-            this.txtNewMessage.Size = new System.Drawing.Size(560, 53);
-            this.txtNewMessage.TabIndex = 5;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
             // ChatControl
             // 
@@ -111,7 +114,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.panel1);
             this.Name = "ChatControl";
-            this.Size = new System.Drawing.Size(663, 413);
+            this.Size = new System.Drawing.Size(655, 466);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
@@ -123,10 +126,10 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel pnlMessages;
         private System.Windows.Forms.Panel panel2;
         private Syncfusion.WinForms.Controls.SfButton btnSend;
         private Syncfusion.Windows.Forms.Tools.TextBoxExt txtNewMessage;
         private Syncfusion.Windows.Forms.BannerTextProvider bannerTextProvider1;
+        private StackPanel stackPanel1;
     }
 }

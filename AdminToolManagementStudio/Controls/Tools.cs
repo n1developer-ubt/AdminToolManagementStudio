@@ -21,7 +21,7 @@ using Syncfusion.WinForms.DataGrid.Interactivity;
 
 namespace AdminToolManagementStudio.Controls
 {
-    public partial class Tools : UserControl
+    public partial class Tools : UserControl, LoadableControl
     {
 
         public CustomerDbContext DbContext { get; set; }
@@ -31,20 +31,20 @@ namespace AdminToolManagementStudio.Controls
             InitializeComponent();
         }
 
-        public void LoadAll()
+        public async Task LoadAll()
         {
             if (DbContext == null)
                 return;
 
-            DbContext.Tools.Load();
+            await DbContext.Tools.LoadAsync();
 
             try
             {
-                
+
             }
             catch (Exception e)
             {
-                
+
             }
 
             sdgTools.DataSource = DbContext.Tools.Local.ToBindingList();
@@ -99,7 +99,7 @@ namespace AdminToolManagementStudio.Controls
         }
 
         private bool Pause = false;
-        
+
         private async void btnUpdateStatus_Click(object sender, EventArgs e)
         {
             if (!(sender is Control c))
@@ -129,7 +129,7 @@ namespace AdminToolManagementStudio.Controls
                 }
 
                 await DbContext.SaveChangesAsync();
-                
+
                 c.Text = "Update All";
                 EnableAllOnUpdate(true);
                 c.Enabled = true;
@@ -212,7 +212,7 @@ namespace AdminToolManagementStudio.Controls
             if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
                 return;
 
-            var d = (Models.Tool) sdgTools.GetRecordAtRowIndex(e.RowIndex);
+            var d = (Models.Tool)sdgTools.GetRecordAtRowIndex(e.RowIndex);
 
             if (d == null)
                 return;
@@ -268,12 +268,13 @@ namespace AdminToolManagementStudio.Controls
         }
 
         private Models.Tool ParseTool(string str)
-        { 
+        {
             var s = str.Split('|');
             s = s.Select(x => x.Trim()).ToArray();
             try
             {
-                return new Models.Tool(){
+                return new Models.Tool()
+                {
                     Smtp = s[0],
                     Port = Convert.ToInt16(s[1]),
                     Username = s[2],
@@ -334,7 +335,7 @@ namespace AdminToolManagementStudio.Controls
                 return;
             }
 
-            var r = (Models.Tool) sdgTools.GetRecordAtRowIndex(e.RowIndex);
+            var r = (Models.Tool)sdgTools.GetRecordAtRowIndex(e.RowIndex);
 
             if (r == null)
             {

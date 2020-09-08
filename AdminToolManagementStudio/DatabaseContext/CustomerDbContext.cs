@@ -5,7 +5,7 @@ using MySql.Data.MySqlClient;
 
 namespace AdminToolManagementStudio.DatabaseContext
 {
-    public class CustomerDbContext:DbContext
+    public class CustomerDbContext : DbContext
     {
         public static MySqlConnectionStringBuilder ConnectionStringBuilder;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -17,6 +17,5 @@ namespace AdminToolManagementStudio.DatabaseContext
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Tool> Tools { get; set; }
         public DbSet<Order> Orders { get; set; }
-
     }
 }

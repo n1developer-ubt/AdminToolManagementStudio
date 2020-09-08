@@ -7,12 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AdminToolManagementStudio.Controls;
 using AdminToolManagementStudio.DatabaseContext;
 using AdminToolManagementStudio.Models;
 using EnvDTE;
+using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using Syncfusion.WinForms.Controls;
+using Message = AdminToolManagementStudio.Models.Message;
+using Settings = AdminToolManagementStudio.Models.Settings;
 
 namespace AdminToolManagementStudio
 {
@@ -20,9 +24,16 @@ namespace AdminToolManagementStudio
     {
         private static MySqlConnectionStringBuilder ConnectionStringBuilder;
 
+        public class LoadableControlType
+        {
+            public bool Loaded { get; set; }
+            public LoadableControl Control { get; set; }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
+            LoadableControls = new[] { new LoadableControlType() { Control = users1, Loaded = true }, new LoadableControlType() { Loaded = false, Control = tools1 }, new LoadableControlType() { Loaded = false, Control = order1 }, new LoadableControlType() { Loaded = false, Control = ticket }, new LoadableControlType() { Loaded = true }, };
             CheckForIllegalCrossThreadCalls = false;
             settings1.SettingsUpdated += Settings1OnSettingsUpdated;
             LoadSettings();
@@ -43,61 +54,61 @@ namespace AdminToolManagementStudio
                 EnableAll(false);
                 Text = "Admin Management - Loading";
                 var result = ConfigureDatabase();
-
-                Invoke(new Action(() => {
-                    switch (result)
-                    {
-                        case DatabaseStatus.ConnectionError:
-                            MessageBox.Show("Connection To Database Failed! Configure Settings", "Error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            break;
-                        case DatabaseStatus.Unknown:
-                            MessageBox.Show("Unknow Error, Contact Admin!", "Error", MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-                            break;
-                        case DatabaseStatus.ConfigureDatabaseSetting:
-                            MessageBox.Show("Please Configure Database Setting!", "Error", MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-                            break;
-                    }
-                }));
-                
-                Text = "Admin Management - Error";
-                if (result == DatabaseStatus.Ok)
-                {
-                    EnableAll(true);
-                    Text = "Admin Management - Connected";
-                }
+                Notify(result);
             });
         }
 
-        enum DatabaseStatus
+        private void Notify(DatabaseStatus result)
         {
-            ConfigureDatabaseSetting,
-            ConnectionError,
-            Unknown,
-            Ok
+            Invoke(new Action(() =>
+            {
+                switch (result)
+                {
+                    case DatabaseStatus.ConnectionError:
+                        MessageBox.Show("Connection To Database Failed! Configure Settings", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        break;
+                    case DatabaseStatus.Unknown:
+                        MessageBox.Show("Unknow Error, Contact Admin!", "Error", MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                        break;
+                    case DatabaseStatus.ConfigureDatabaseSetting:
+                        MessageBox.Show("Please Configure Database Setting!", "Error", MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                        break;
+                }
+            }));
+
+            Text = "Admin Management - Error";
+            if (result == DatabaseStatus.Ok)
+            {
+                EnableAll(true);
+                Text = "Admin Management - Connected";
+            }
         }
+
+
 
         private DatabaseStatus ConfigureDatabase()
         {
             _setting.DatabaseInfo = new DatabaseInfo()
             {
-                DatabaseName = "sql12363680",
-                Username = "sql12363680",
+                DatabaseName = "WCDToolManagement",
+                Username = "root",
                 Port = "3306",
-                Host = "sql12.freemysqlhosting.net",
-                Password = "TJpzhECnwq"
+                Host = "localhost",
+                Password = ""
             };
             if (_setting.DatabaseInfo == null)
             {
-                _setting.DatabaseInfo = new DatabaseInfo(){
-                    DatabaseName = "sql12363680",
-                    Username = "sql12363680",
-                    Port = "3306",
-                    Host = " sql12.freemysqlhosting.net",
-                    Password = "TJpzhECnwq"
-                };
+                //_setting.DatabaseInfo = new DatabaseInfo()
+                //{
+                //    DatabaseName = "sql12363680",
+                //    Username = "sql12363680",
+                //    Port = "3306",
+                //    Host = " sql12.freemysqlhosting.net",
+                //    Password = "TJpzhECnwq"
+                //};
                 //_setting.DatabaseInfo = new DatabaseInfo(){
                 //    DatabaseName = "admin_usa",
                 //    Username = "admin_usa",
@@ -109,7 +120,7 @@ namespace AdminToolManagementStudio
 
             try
             {
-                CustomerDbContext.ConnectionStringBuilder=new MySqlConnectionStringBuilder()
+                CustomerDbContext.ConnectionStringBuilder = new MySqlConnectionStringBuilder()
                 {
                     Server = _setting.DatabaseInfo.Host,
                     Port = Convert.ToUInt16(_setting.DatabaseInfo.Port),
@@ -123,13 +134,12 @@ namespace AdminToolManagementStudio
                 return DatabaseStatus.ConfigureDatabaseSetting;
             }
 
-            //MessageBox.Show(JsonConvert.SerializeObject(CustomerDbContext.ConnectionStringBuilder));
             CustomerDbContext dbContext = null;
 
             try
             {
                 dbContext = new CustomerDbContext();
-                //_dbContext.Database.EnsureDeleted();
+                //dbContext.Database.EnsureDeleted();
                 dbContext.Database.EnsureCreated();
             }
             catch (Exception e)
@@ -140,11 +150,16 @@ namespace AdminToolManagementStudio
             try
             {
                 users1.DbContext = dbContext;
-                tools1.DbContext = dbContext;
-                order1.DbContext = dbContext;
-                order1.LoadAll();
-                users1.LoadAll();
-                tools1.LoadAll();
+                var customer = dbContext.Customers.Include(x => x.Tickets).FirstOrDefault(x => x.Id == 1);
+
+                customer.Tickets.Add(new Ticket() { Description = "Hello Worald", TicketStatus = TicketStatus.Pending, Subject = "Hello World", Messages = new List<Message>() { new Message() { Text = "Hello How are you?", Time = DateTime.Now, Type = MessageType.Customer }, new Message() { Text = "Hello How are you?", Time = DateTime.Now, Type = MessageType.Admin }, new Message() { Text = "Hello How are you?", Time = DateTime.Now, Type = MessageType.Customer } } });
+                customer.Tickets.Add(new Ticket() { Description = "Hello Wdorld", TicketStatus = TicketStatus.Pending, Subject = "Hello World", Messages = new List<Message>() { new Message() { Text = "Hello How are you?", Time = DateTime.Now, Type = MessageType.Customer }, new Message() { Text = "Hello How are you?", Time = DateTime.Now, Type = MessageType.Admin }, new Message() { Text = "Hello How are you?", Time = DateTime.Now, Type = MessageType.Customer } } });
+                customer.Tickets.Add(new Ticket() { Description = "Hellos World", TicketStatus = TicketStatus.Pending, Subject = "Hello World", Messages = new List<Message>() { new Message() { Text = "Hello How are you?", Time = DateTime.Now, Type = MessageType.Customer }, new Message() { Text = "Hello How are you?", Time = DateTime.Now, Type = MessageType.Admin }, new Message() { Text = "Hello How are you?", Time = DateTime.Now, Type = MessageType.Customer } } });
+                dbContext.SaveChanges();
+                tools1.DbContext = new CustomerDbContext();
+                order1.DbContext = new CustomerDbContext();
+                ticket.DbContext = new CustomerDbContext();
+                users1.LoadAll().Wait();
             }
             catch (Exception e)
             {
@@ -153,6 +168,8 @@ namespace AdminToolManagementStudio
 
             return DatabaseStatus.Ok;
         }
+
+        #region Settings
 
         private void SaveSetting()
         {
@@ -186,5 +203,35 @@ namespace AdminToolManagementStudio
             SaveSetting();
             UpdateSetting();
         }
+        #endregion
+
+        public LoadableControlType[] LoadableControls;
+
+        private async void tabControlAdv1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!LoadableControls[tabControlAdv1.SelectedIndex].Loaded)
+            {
+                if (LoadableControls[tabControlAdv1.SelectedIndex].Control == null)
+                    return;
+
+                try
+                {
+
+                    await LoadableControls[tabControlAdv1.SelectedIndex].Control.LoadAll();
+                    LoadableControls[tabControlAdv1.SelectedIndex].Loaded = true;
+                }
+                catch (Exception exception)
+                {
+
+                }
+            }
+        }
+    }
+    public enum DatabaseStatus
+    {
+        ConfigureDatabaseSetting,
+        ConnectionError,
+        Unknown,
+        Ok
     }
 }

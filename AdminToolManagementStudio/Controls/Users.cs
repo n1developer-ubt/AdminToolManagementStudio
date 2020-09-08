@@ -15,7 +15,7 @@ using Syncfusion.WinForms.DataGrid.Interactivity;
 
 namespace AdminToolManagementStudio.Controls
 {
-    public partial class Users : UserControl
+    public partial class Users : UserControl, LoadableControl
     {
         public CustomerDbContext DbContext { get; set; }
         public Users()
@@ -27,12 +27,12 @@ namespace AdminToolManagementStudio.Controls
             //sgvCustomers.changed
         }
 
-        public void LoadAll()
+        public async Task LoadAll()
         {
             if (DbContext == null)
                 return;
 
-            DbContext.Customers.Load();
+            await DbContext.Customers.LoadAsync();
             sgvCustomers.DataSource = DbContext.Customers.Local.ToBindingList();
         }
 
@@ -52,7 +52,7 @@ namespace AdminToolManagementStudio.Controls
 
                 if (result > 0)
                 {
-                    MessageBox.Show("Email Already Exist!","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    MessageBox.Show("Email Already Exist!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -71,7 +71,7 @@ namespace AdminToolManagementStudio.Controls
             }
             catch (Exception exception)
             {
-                
+
             }
         }
 
@@ -88,16 +88,16 @@ namespace AdminToolManagementStudio.Controls
         {
             if (e.Column.HeaderText.ToLower().Equals("action"))
             {
-                var r = (Models.Customer) sgvCustomers.GetRecordAtRowIndex(e.RowIndex);
+                var r = (Models.Customer)sgvCustomers.GetRecordAtRowIndex(e.RowIndex);
                 DbContext.Customers.Remove(r);
                 await DbContext.SaveChangesAsync();
-                
+
             }
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            if(txtSearch.Text .Equals(""))
+            if (txtSearch.Text.Equals(""))
             {
                 sgvCustomers.SearchController.ClearSearch();
                 return;

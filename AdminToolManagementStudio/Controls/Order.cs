@@ -17,14 +17,14 @@ using Syncfusion.WinForms.DataGrid.Interactivity;
 
 namespace AdminToolManagementStudio.Controls
 {
-    public partial class Order : UserControl
+    public partial class Order : UserControl, LoadableControl
     {
         public CustomerDbContext DbContext;
 
         public Order()
         {
             InitializeComponent();
-            sdgOrders.QueryRowStyle+=SfDataGrid1OnQueryRowStyle;
+            sdgOrders.QueryRowStyle += SfDataGrid1OnQueryRowStyle;
         }
 
         public void SetupSummary()
@@ -49,7 +49,7 @@ namespace AdminToolManagementStudio.Controls
 
         private void SetupGroupSummary()
         {
-            var groupSummaryRow1 = new GridSummaryRow {Name = "GroupSummary", ShowSummaryInRow = false};
+            var groupSummaryRow1 = new GridSummaryRow { Name = "GroupSummary", ShowSummaryInRow = false };
 
             // Creates the GridSummaryColumn.
             var summaryColumn1 = new GridSummaryColumn
@@ -71,13 +71,14 @@ namespace AdminToolManagementStudio.Controls
         private void SetupGrouping()
         {
             sdgOrders.GroupColumnDescriptions.Clear();
-            sdgOrders.GroupColumnDescriptions.Add(new GroupColumnDescription(){
+            sdgOrders.GroupColumnDescriptions.Add(new GroupColumnDescription()
+            {
                 ColumnName = "Customer.Id"
             });
         }
         private void SfDataGrid1OnQueryRowStyle(object sender, QueryRowStyleEventArgs e)
         {
-            var o = (Models.Order) sdgOrders.GetRecordAtRowIndex(e.RowIndex);
+            var o = (Models.Order)sdgOrders.GetRecordAtRowIndex(e.RowIndex);
 
             if (o == null) return;
 
@@ -87,14 +88,14 @@ namespace AdminToolManagementStudio.Controls
                     e.Style.BackColor = Color.Green;
                     e.Style.TextColor = Color.White;
                     break;
-                
+
                 case OrderStatus.Rejected:
                     e.Style.BackColor = Color.Firebrick;
                     e.Style.TextColor = Color.White;
                     break;
-                
+
                 case OrderStatus.Pending:
-                    e.Style.BackColor= Color.Orange;
+                    e.Style.BackColor = Color.Orange;
                     e.Style.TextColor = Color.White;
                     break;
             }
@@ -102,13 +103,13 @@ namespace AdminToolManagementStudio.Controls
 
         private ObservableCollection<Models.Order> Orders;
 
-        public void LoadAll()
+        public async Task LoadAll()
         {
-            if(DbContext == null) return;
+            if (DbContext == null) return;
 
             //Orders = DbContext.Orders.Include(x => x.Customer).Include(x => x.Tool).ToObservableCollection();
 
-            DbContext.Orders.Load();
+            await DbContext.Orders.LoadAsync();
 
 
             SetupGrouping();
@@ -127,13 +128,13 @@ namespace AdminToolManagementStudio.Controls
             //DbContext.Orders.Add(o);
             //sdgOrders.SortColumnDescriptions.Add(new SortColumnDescription(){ColumnName = "Customer Id",SortDirection = ListSortDirection.Descending});
 
-            
+
             sdgOrders.Refresh();
         }
 
         private void btnReload_Click(object sender, EventArgs e)
         {
-            if(!(sender is Control c)) return;
+            if (!(sender is Control c)) return;
 
             c.Enabled = false;
 
@@ -155,7 +156,7 @@ namespace AdminToolManagementStudio.Controls
             }
             catch (Exception exception)
             {
-                
+
             }
         }
 

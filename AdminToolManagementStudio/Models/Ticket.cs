@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -7,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace AdminToolManagementStudio.Models
 {
-    class Ticket
+    public class Ticket
     {
+        [Key]
         public int Id { get; set; }
 
         public string Subject { get; set; }
@@ -24,15 +26,27 @@ namespace AdminToolManagementStudio.Models
             }
         }
 
-        public List<Message> Messages { get; set; }         
+        public List<Message> Messages { get; set; }
 
         [NotMapped] public TicketStatus TicketStatus;
     }
 
+    public class CustomerTicket
+    {
+        public TicketStatus Status { get; set; }
+        public int CustomerId { get; set; }
+        public int TicketId { get; set; }
+        public string Name { get; set; }
+        public DateTime LastUpdate { get; set; }
+    }
     public class Message
     {
+        [Key]
+        public int Id { get; set; }
         public string Text { get; set; }
         public DateTime Time { get; set; }
+
+        public string Name { get; set; }
 
         public string MessageType
         {

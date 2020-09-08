@@ -38,6 +38,8 @@
             this.tools1 = new AdminToolManagementStudio.Controls.Tools();
             this.tabPageAdv3 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.order1 = new AdminToolManagementStudio.Controls.Order();
+            this.tabPageAdv5 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.ticket = new AdminToolManagementStudio.Controls.AdminTicketControl();
             this.tabPageAdv4 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.settings1 = new AdminToolManagementStudio.Controls.Settings();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
@@ -45,6 +47,7 @@
             this.tabPageAdv1.SuspendLayout();
             this.tabPageAdv2.SuspendLayout();
             this.tabPageAdv3.SuspendLayout();
+            this.tabPageAdv5.SuspendLayout();
             this.tabPageAdv4.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,6 +60,7 @@
             this.tabControlAdv1.Controls.Add(this.tabPageAdv1);
             this.tabControlAdv1.Controls.Add(this.tabPageAdv2);
             this.tabControlAdv1.Controls.Add(this.tabPageAdv3);
+            this.tabControlAdv1.Controls.Add(this.tabPageAdv5);
             this.tabControlAdv1.Controls.Add(this.tabPageAdv4);
             this.tabControlAdv1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlAdv1.ImageAlignmentR = Syncfusion.Windows.Forms.Tools.RelativeImageAlignment.AboveText;
@@ -68,6 +72,7 @@
             this.tabControlAdv1.TabStyle = typeof(Syncfusion.Windows.Forms.Tools.TabRendererOffice2016Colorful);
             this.tabControlAdv1.ThemeName = "TabRendererOffice2016Colorful";
             this.tabControlAdv1.ThemeStyle.PrimitiveButtonStyle.DisabledNextPageImage = null;
+            this.tabControlAdv1.SelectedIndexChanged += new System.EventHandler(this.tabControlAdv1_SelectedIndexChanged);
             // 
             // tabPageAdv1
             // 
@@ -147,6 +152,32 @@
             this.order1.Size = new System.Drawing.Size(720, 443);
             this.order1.TabIndex = 0;
             // 
+            // tabPageAdv5
+            // 
+            this.tabPageAdv5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.tabPageAdv5.Controls.Add(this.ticket);
+            this.tabPageAdv5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
+            this.tabPageAdv5.Image = global::AdminToolManagementStudio.Properties.Resources.technical_support;
+            this.tabPageAdv5.ImageSize = new System.Drawing.Size(32, 32);
+            this.tabPageAdv5.Location = new System.Drawing.Point(74, 1);
+            this.tabPageAdv5.Name = "tabPageAdv5";
+            this.tabPageAdv5.ShowCloseButton = true;
+            this.tabPageAdv5.Size = new System.Drawing.Size(720, 443);
+            this.tabPageAdv5.TabFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabPageAdv5.TabIndex = 5;
+            this.tabPageAdv5.Text = "Support";
+            this.tabPageAdv5.ThemesEnabled = false;
+            // 
+            // ticket
+            // 
+            this.ticket.BackColor = System.Drawing.Color.White;
+            this.ticket.DbContext = null;
+            this.ticket.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ticket.Location = new System.Drawing.Point(0, 0);
+            this.ticket.Name = "ticket";
+            this.ticket.Size = new System.Drawing.Size(720, 443);
+            this.ticket.TabIndex = 0;
+            // 
             // tabPageAdv4
             // 
             this.tabPageAdv4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -189,12 +220,15 @@
             this.Controls.Add(this.tabControlAdv1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWindow";
+            this.Style.MdiChild.IconHorizontalAlignment = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Style.MdiChild.IconVerticalAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Center;
             this.Text = "Admin Management";
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).EndInit();
             this.tabControlAdv1.ResumeLayout(false);
             this.tabPageAdv1.ResumeLayout(false);
             this.tabPageAdv2.ResumeLayout(false);
             this.tabPageAdv3.ResumeLayout(false);
+            this.tabPageAdv5.ResumeLayout(false);
             this.tabPageAdv4.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -210,6 +244,8 @@
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv4;
         private Controls.Settings settings1;
         private Controls.Order order1;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv5;
+        private Controls.AdminTicketControl ticket;
     }
 }
 
