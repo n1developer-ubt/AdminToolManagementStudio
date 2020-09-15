@@ -86,6 +86,7 @@
             this.txtNewMessage.Name = "txtNewMessage";
             this.txtNewMessage.Size = new System.Drawing.Size(552, 53);
             this.txtNewMessage.TabIndex = 5;
+            this.txtNewMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNewMessage_KeyDown);
             // 
             // btnSend
             // 

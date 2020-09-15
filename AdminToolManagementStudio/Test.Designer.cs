@@ -28,88 +28,60 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.message1 = new AdminToolManagementStudio.Controls.Message();
-            this.message2 = new AdminToolManagementStudio.Controls.Message();
-            this.message3 = new AdminToolManagementStudio.Controls.Message();
-            this.message4 = new AdminToolManagementStudio.Controls.Message();
-            this.message5 = new AdminToolManagementStudio.Controls.Message();
+            this.sfButton1 = new Syncfusion.WinForms.Controls.SfButton();
+            this.sfDataGrid1 = new Syncfusion.WinForms.DataGrid.SfDataGrid();
+            this.tabControlAdv1 = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
+            ((System.ComponentModel.ISupportInitialize)(this.sfDataGrid1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.SuspendLayout();
             // 
-            // message1
+            // sfButton1
             // 
-            this.message1.BackColor = System.Drawing.Color.White;
-            this.message1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.message1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.message1.Location = new System.Drawing.Point(2, 2);
-            this.message1.Name = "message1";
-            this.message1.Size = new System.Drawing.Size(796, 53);
-            this.message1.TabIndex = 0;
+            this.sfButton1.AccessibleName = "Button";
+            this.sfButton1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
+            this.sfButton1.Location = new System.Drawing.Point(404, 145);
+            this.sfButton1.Name = "sfButton1";
+            this.sfButton1.Size = new System.Drawing.Size(96, 28);
+            this.sfButton1.TabIndex = 0;
+            this.sfButton1.Text = "sfButton1";
             // 
-            // message2
+            // sfDataGrid1
             // 
-            this.message2.BackColor = System.Drawing.Color.White;
-            this.message2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.message2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.message2.Location = new System.Drawing.Point(2, 55);
-            this.message2.Name = "message2";
-            this.message2.Size = new System.Drawing.Size(796, 53);
-            this.message2.TabIndex = 1;
+            this.sfDataGrid1.AccessibleName = "Table";
+            this.sfDataGrid1.Location = new System.Drawing.Point(404, 344);
+            this.sfDataGrid1.Name = "sfDataGrid1";
+            this.sfDataGrid1.Size = new System.Drawing.Size(240, 150);
+            this.sfDataGrid1.TabIndex = 1;
+            this.sfDataGrid1.Text = "sfDataGrid1";
             // 
-            // message3
+            // tabControlAdv1
             // 
-            this.message3.BackColor = System.Drawing.Color.White;
-            this.message3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.message3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.message3.Location = new System.Drawing.Point(2, 108);
-            this.message3.Name = "message3";
-            this.message3.Size = new System.Drawing.Size(796, 53);
-            this.message3.TabIndex = 2;
-            // 
-            // message4
-            // 
-            this.message4.BackColor = System.Drawing.Color.White;
-            this.message4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.message4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.message4.Location = new System.Drawing.Point(2, 161);
-            this.message4.Name = "message4";
-            this.message4.Size = new System.Drawing.Size(796, 53);
-            this.message4.TabIndex = 3;
-            // 
-            // message5
-            // 
-            this.message5.BackColor = System.Drawing.Color.White;
-            this.message5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.message5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.message5.Location = new System.Drawing.Point(2, 214);
-            this.message5.Name = "message5";
-            this.message5.Size = new System.Drawing.Size(796, 53);
-            this.message5.TabIndex = 4;
+            this.tabControlAdv1.BeforeTouchSize = new System.Drawing.Size(200, 100);
+            this.tabControlAdv1.Location = new System.Drawing.Point(-23, -46);
+            this.tabControlAdv1.Name = "tabControlAdv1";
+            this.tabControlAdv1.Size = new System.Drawing.Size(200, 100);
+            this.tabControlAdv1.TabIndex = 2;
             // 
             // Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.message5);
-            this.Controls.Add(this.message4);
-            this.Controls.Add(this.message3);
-            this.Controls.Add(this.message2);
-            this.Controls.Add(this.message1);
+            this.Controls.Add(this.tabControlAdv1);
+            this.Controls.Add(this.sfDataGrid1);
+            this.Controls.Add(this.sfButton1);
             this.Name = "Test";
-            this.Style.MdiChild.IconHorizontalAlignment = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Style.MdiChild.IconVerticalAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Center;
             this.Text = "Test";
+            ((System.ComponentModel.ISupportInitialize)(this.sfDataGrid1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private Controls.Message message1;
-        private Controls.Message message2;
-        private Controls.Message message3;
-        private Controls.Message message4;
-        private Controls.Message message5;
+        private Syncfusion.WinForms.Controls.SfButton sfButton1;
+        private Syncfusion.WinForms.DataGrid.SfDataGrid sfDataGrid1;
+        private Syncfusion.Windows.Forms.Tools.TabControlAdv tabControlAdv1;
     }
 }

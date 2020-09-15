@@ -92,6 +92,7 @@
             this.sdgTools.AccessibleName = "Table";
             this.sdgTools.AllowDeleting = true;
             this.sdgTools.AllowResizingColumns = true;
+            this.sdgTools.AutoGenerateColumns = false;
             this.sdgTools.AutoSizeColumnsMode = Syncfusion.WinForms.DataGrid.Enums.AutoSizeColumnsMode.Fill;
             gridNumericColumn1.AllowResizing = true;
             gridNumericColumn1.Format = "{0}";

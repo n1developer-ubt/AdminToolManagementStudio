@@ -35,19 +35,22 @@
             Syncfusion.WinForms.DataGrid.GridNumericColumn gridNumericColumn3 = new Syncfusion.WinForms.DataGrid.GridNumericColumn();
             Syncfusion.WinForms.DataGrid.GridTextColumn gridTextColumn2 = new Syncfusion.WinForms.DataGrid.GridTextColumn();
             Syncfusion.WinForms.DataGrid.GridTextColumn gridTextColumn3 = new Syncfusion.WinForms.DataGrid.GridTextColumn();
-            Syncfusion.WinForms.DataGrid.GridTextColumn gridTextColumn4 = new Syncfusion.WinForms.DataGrid.GridTextColumn();
             Syncfusion.WinForms.DataGrid.GridNumericColumn gridNumericColumn4 = new Syncfusion.WinForms.DataGrid.GridNumericColumn();
-            Syncfusion.Windows.Forms.BannerTextInfo bannerTextInfo1 = new Syncfusion.Windows.Forms.BannerTextInfo();
+            Syncfusion.WinForms.DataGrid.GridButtonColumn gridButtonColumn1 = new Syncfusion.WinForms.DataGrid.GridButtonColumn();
+            Syncfusion.Windows.Forms.BannerTextInfo bannerTextInfo3 = new Syncfusion.Windows.Forms.BannerTextInfo();
             this.sfDataGrid1 = new Syncfusion.WinForms.DataGrid.SfDataGrid();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnReload = new Syncfusion.WinForms.Controls.SfButton();
             this.txtSearch = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.panel2 = new System.Windows.Forms.Panel();
             this.bannerTextProvider1 = new Syncfusion.Windows.Forms.BannerTextProvider(this.components);
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.sfButton1 = new Syncfusion.WinForms.Controls.SfButton();
             ((System.ComponentModel.ISupportInitialize)(this.sfDataGrid1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtSearch)).BeginInit();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // sfDataGrid1
@@ -80,30 +83,38 @@
             gridTextColumn3.AllowEditing = false;
             gridTextColumn3.HeaderText = "Password";
             gridTextColumn3.MappingName = "Tool.Password";
-            gridTextColumn4.AllowEditing = false;
-            gridTextColumn4.HeaderText = "BuyingStatus";
-            gridTextColumn4.MappingName = "Status";
             gridNumericColumn4.AllowEditing = false;
             gridNumericColumn4.Format = "{0}";
             gridNumericColumn4.HeaderText = "Price";
             gridNumericColumn4.MappingName = "Tool.Price";
+            gridButtonColumn1.AllowDefaultButtonText = false;
+            gridButtonColumn1.AllowEditing = false;
+            gridButtonColumn1.ButtonSize = new System.Drawing.Size(0, 0);
+            gridButtonColumn1.DefaultButtonText = "";
+            gridButtonColumn1.HeaderText = "Action";
+            gridButtonColumn1.ImageSize = new System.Drawing.Size(0, 0);
+            gridButtonColumn1.MappingName = "Column8";
+            gridButtonColumn1.NullDisplayText = "Copy";
             this.sfDataGrid1.Columns.Add(gridNumericColumn1);
             this.sfDataGrid1.Columns.Add(gridNumericColumn2);
             this.sfDataGrid1.Columns.Add(gridTextColumn1);
             this.sfDataGrid1.Columns.Add(gridNumericColumn3);
             this.sfDataGrid1.Columns.Add(gridTextColumn2);
             this.sfDataGrid1.Columns.Add(gridTextColumn3);
-            this.sfDataGrid1.Columns.Add(gridTextColumn4);
             this.sfDataGrid1.Columns.Add(gridNumericColumn4);
+            this.sfDataGrid1.Columns.Add(gridButtonColumn1);
             this.sfDataGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sfDataGrid1.Location = new System.Drawing.Point(0, 0);
             this.sfDataGrid1.Name = "sfDataGrid1";
             this.sfDataGrid1.Size = new System.Drawing.Size(765, 470);
             this.sfDataGrid1.TabIndex = 0;
             this.sfDataGrid1.Text = "sfDataGrid1";
+            this.sfDataGrid1.CellButtonClick += new Syncfusion.WinForms.DataGrid.Events.CellButtonClickEventHandler(this.sfDataGrid1_CellButtonClick);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.sfButton1);
+            this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.btnReload);
             this.panel1.Controls.Add(this.txtSearch);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -135,10 +146,10 @@
             // 
             // txtSearch
             // 
-            bannerTextInfo1.Mode = Syncfusion.Windows.Forms.BannerTextMode.EditMode;
-            bannerTextInfo1.Text = "Search Everywhere";
-            bannerTextInfo1.Visible = true;
-            this.bannerTextProvider1.SetBannerText(this.txtSearch, bannerTextInfo1);
+            bannerTextInfo3.Mode = Syncfusion.Windows.Forms.BannerTextMode.EditMode;
+            bannerTextInfo3.Text = "Search Everywhere";
+            bannerTextInfo3.Visible = true;
+            this.bannerTextProvider1.SetBannerText(this.txtSearch, bannerTextInfo3);
             this.txtSearch.BeforeTouchSize = new System.Drawing.Size(279, 29);
             this.txtSearch.Dock = System.Windows.Forms.DockStyle.Left;
             this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -157,6 +168,35 @@
             this.panel2.Size = new System.Drawing.Size(765, 470);
             this.panel2.TabIndex = 4;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pictureBox1.Location = new System.Drawing.Point(660, 5);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(10, 30);
+            this.pictureBox1.TabIndex = 4;
+            this.pictureBox1.TabStop = false;
+            // 
+            // sfButton1
+            // 
+            this.sfButton1.AccessibleName = "Button";
+            this.sfButton1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.sfButton1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
+            this.sfButton1.Location = new System.Drawing.Point(570, 5);
+            this.sfButton1.Name = "sfButton1";
+            this.sfButton1.Size = new System.Drawing.Size(90, 30);
+            this.sfButton1.Style.BackColor = System.Drawing.Color.Green;
+            this.sfButton1.Style.FocusedBackColor = System.Drawing.Color.Green;
+            this.sfButton1.Style.FocusedForeColor = System.Drawing.Color.White;
+            this.sfButton1.Style.ForeColor = System.Drawing.Color.White;
+            this.sfButton1.Style.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(78)))), ((int)(((byte)(0)))));
+            this.sfButton1.Style.HoverForeColor = System.Drawing.Color.White;
+            this.sfButton1.Style.PressedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(163)))), ((int)(((byte)(85)))));
+            this.sfButton1.Style.PressedForeColor = System.Drawing.Color.White;
+            this.sfButton1.TabIndex = 5;
+            this.sfButton1.Text = "Copy All";
+            this.sfButton1.Click += new System.EventHandler(this.sfButton1_Click);
+            // 
             // Order
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -171,6 +211,7 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtSearch)).EndInit();
             this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -183,5 +224,7 @@
         private Syncfusion.Windows.Forms.Tools.TextBoxExt txtSearch;
         private System.Windows.Forms.Panel panel2;
         private Syncfusion.Windows.Forms.BannerTextProvider bannerTextProvider1;
+        private Syncfusion.WinForms.Controls.SfButton sfButton1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

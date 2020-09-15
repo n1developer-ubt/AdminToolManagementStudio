@@ -21,7 +21,7 @@ using Syncfusion.WinForms.DataGrid.Interactivity;
 
 namespace AdminToolManagementStudio.Controls
 {
-    public partial class OtherTools : UserControl
+    public partial class OtherTools : UserControl, LoadableControl
     {
 
         public CustomerDbContext DbContext { get; set; }
@@ -31,12 +31,12 @@ namespace AdminToolManagementStudio.Controls
             InitializeComponent();
         }
 
-        public void LoadAll()
+        public async Task LoadAll()
         {
             if (DbContext == null)
                 return;
 
-            DbContext.Tools.Load();
+            await DbContext.OtherTools.LoadAsync();
 
             try
             {
@@ -47,19 +47,19 @@ namespace AdminToolManagementStudio.Controls
                 
             }
 
-            sdgTools.DataSource = DbContext.Tools.Local.ToBindingList();
+            sdgTools.DataSource = DbContext.OtherTools.Local.ToBindingList();
         }
 
         private async void btnAddNewTool_Click(object sender, EventArgs e)
         {
-            using (var t = new Tool())
+            using (var t = new OtherTool())
             {
                 t.ShowDialog();
 
                 if (t.Value == null)
                     return;
 
-                DbContext.Tools.Add(t.Value);
+                DbContext.OtherTools.Add(t.Value);
                 await DbContext.SaveChangesAsync();
             }
         }
@@ -98,106 +98,6 @@ namespace AdminToolManagementStudio.Controls
 
         }
 
-        private bool Pause = false;
-        
-        private async void btnUpdateStatus_Click(object sender, EventArgs e)
-        {
-            if (!(sender is Control c))
-                return;
-
-            if (c.Text.Equals("Update All"))
-            {
-                c.Text = "Pause";
-
-                foreach (var tool in DbContext.Tools)
-                {
-                    if (Pause)
-                    {
-                        Pause = false;
-                        break;
-                    }
-
-                    tool.Status = ToolStatus.Checking.ToString();
-                    sdgTools.Refresh();
-                    var result = await GetUpdatedStatus(tool);
-
-                    if (result == ToolStatus.Error)
-                        break;
-
-                    tool.Status = result.ToString();
-                    sdgTools.Refresh();
-                }
-
-                await DbContext.SaveChangesAsync();
-                
-                c.Text = "Update All";
-                EnableAllOnUpdate(true);
-                c.Enabled = true;
-            }
-            else
-            {
-                c.Enabled = false;
-                Pause = true;
-            }
-        }
-
-        public string TempMail { get; set; }
-
-        private bool IsEmail(string emailAddress)
-        {
-            try
-            {
-                new MailAddress(emailAddress);
-                return true;
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
-        }
-
-        private async Task<ToolStatus> GetUpdatedStatus(Models.Tool t)
-        {
-            if (!IsEmail(TempMail))
-            {
-                MessageBox.Show("Temp Email Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return ToolStatus.Error;
-            }
-
-            if (!IsEmail(t.Username))
-                return ToolStatus.NotWorking;
-
-            var result = ToolStatus.Working;
-
-            await Task.Run(() =>
-            {
-                using (SmtpClient c = new SmtpClient(t.Smtp, t.Port))
-                {
-                    try
-                    {
-                        c.Credentials = new NetworkCredential(t.Username, t.Password);
-                        c.EnableSsl = t.Ssl;
-                        c.DeliveryMethod = SmtpDeliveryMethod.Network;
-                        var m = new MailMessage();
-                        m.From = new MailAddress(t.Username, t.Username.Split('@')[0]);
-                        m.To.Add(TempMail);
-                        m.Subject = "Test";
-                        m.Body = "test";
-                        c.Send(m);
-                    }
-                    catch (SmtpException e)
-                    {
-                        result = ToolStatus.NotWorking;
-                    }
-                    catch (Exception e)
-                    {
-                        result = ToolStatus.Unknown;
-                    }
-                }
-            });
-            return result;
-        }
-
         private void EnableAllOnUpdate(bool enable)
         {
             btnReload.Enabled = enable;
@@ -212,7 +112,7 @@ namespace AdminToolManagementStudio.Controls
             if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
                 return;
 
-            var d = (Models.Tool) sdgTools.GetRecordAtRowIndex(e.RowIndex);
+            var d = (Models.OtherTool) sdgTools.GetRecordAtRowIndex(e.RowIndex);
 
             if (d == null)
                 return;
@@ -258,7 +158,7 @@ namespace AdminToolManagementStudio.Controls
 
                             if (t == null) continue;
 
-                            DbContext.Tools.Add(t);
+                            DbContext.OtherTools.Add(t);
                         }
 
                         await DbContext.SaveChangesAsync();
@@ -267,20 +167,19 @@ namespace AdminToolManagementStudio.Controls
             }
         }
 
-        private Models.Tool ParseTool(string str)
+        private Models.OtherTool ParseTool(string str)
         { 
             var s = str.Split('|');
             s = s.Select(x => x.Trim()).ToArray();
             try
             {
-                return new Models.Tool(){
+                return new Models.OtherTool(){
                     Smtp = s[0],
-                    Port = Convert.ToInt16(s[1]),
+                    Description = s[1],
                     Username = s[2],
                     Password = s[3],
                     Status = ToolStatus.Unknown.ToString(),
-                    Ssl = s[4].ToLower().Equals("ssl"),
-                    Price = Convert.ToInt32(s[5])
+                    Price = Convert.ToInt32(s[4])
                 };
             }
             catch (Exception e)
@@ -300,41 +199,7 @@ namespace AdminToolManagementStudio.Controls
 
             IsWorking = true;
 
-            if (e.Column.HeaderText.ToLower().Equals("check status"))
-            {
-                if (UpdatingStatus)
-                {
-                    IsWorking = false;
-                    return;
-                }
-
-                UpdatingStatus = true;
-
-                var rr = (Models.Tool)sdgTools.GetRecordAtRowIndex(e.RowIndex);
-
-                rr.Status = ToolStatus.Checking.ToString();
-
-                sdgTools.Refresh();
-                var result = await GetUpdatedStatus(rr);
-
-                if (result == ToolStatus.Error)
-                {
-                    IsWorking = false;
-                    return;
-                }
-
-                rr.Status = (result).ToString();
-
-                UpdatingStatus = false;
-
-                sdgTools.Refresh();
-
-                IsWorking = false;
-
-                return;
-            }
-
-            var r = (Models.Tool) sdgTools.GetRecordAtRowIndex(e.RowIndex);
+            var r = (Models.OtherTool) sdgTools.GetRecordAtRowIndex(e.RowIndex);
 
             if (r == null)
             {
@@ -342,7 +207,7 @@ namespace AdminToolManagementStudio.Controls
                 return;
             }
 
-            DbContext.Tools.Remove(r);
+            DbContext.OtherTools.Remove(r);
 
             await DbContext.SaveChangesAsync();
             IsWorking = false;

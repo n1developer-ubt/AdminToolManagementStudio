@@ -41,6 +41,8 @@ namespace AdminToolManagementStudio.Controls
                 return;
             }
 
+            Message.CustomerName = customer.Name;
+
             var ticket = customer.Tickets.FirstOrDefault(x => x.Id == tic.TicketId);
 
             CurrentTicket = ticket;
@@ -54,13 +56,39 @@ namespace AdminToolManagementStudio.Controls
 
         public async Task LoadAll()
         {
+            if (DbContext == null)
+                throw new Exception("Error My Write");
+
             var customers = await DbContext.Customers.Include(x => x.Tickets).ThenInclude(x => x.Messages)
                 .Where(x => x.Tickets.Count > 0).ToListAsync();
 
             var tic = customers.SelectMany(x => x.Tickets.Select(y => new Models.CustomerTicket()
-            { Name = x.Name, LastUpdate = DateTime.Now, TicketId = y.Id, CustomerId = x.Id, Status = y.TicketStatus })).ToList();
+            { Name = x.Name, LastUpdate = y.Messages.OrderBy(i => i.Time).FirstOrDefault() != null ? y.Messages.OrderByDescending(i => i.Time).FirstOrDefault().Time : DateTime.MinValue, TicketId = y.Id, CustomerId = x.Id, Status = y.TicketStatus })).ToList();
 
             tickets.LoadCustomerTicket(tic);
+        }
+
+        private async void btnMarkAsResolved_Click(object sender, EventArgs e)
+        {
+            if (!(sender is Control c)) return;
+            c.Enabled = false;
+
+            if(CurrentTicket == null) return;
+
+            CurrentTicket.TicketStatus = TicketStatus.Resolved;
+
+            await DbContext.SaveChangesAsync();
+
+            tickets.SelectCustomerTicket.SetTicketStatus(TicketStatus.Resolved);
+
+            c.Enabled = true;
+        }
+
+        private void btnReload_Click(object sender, EventArgs e)
+        {
+            Enabled = false;
+            LoadAll();
+            Enabled = true;
         }
     }
 }

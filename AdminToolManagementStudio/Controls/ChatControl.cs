@@ -26,7 +26,7 @@ namespace AdminToolManagementStudio.Controls
         public void LoadAllMessages(List<Models.Message> messages)
         {
             stackPanel1.Controls.Clear();
-            foreach (var message in messages.OrderByDescending(x => x.Time))
+            foreach (var message in messages.OrderBy(x => x.Time))
             {
                 stackPanel1.Controls.Add(new Message(message));
             }
@@ -34,9 +34,13 @@ namespace AdminToolManagementStudio.Controls
 
         private async void btnSend_Click(object sender, EventArgs e)
         {
+            if(!(sender is Control c )) return;
+
+            c.Enabled = false;
+
             var message = new Models.Message()
             {
-                Text = txtNewMessage.Text,
+                Text = txtNewMessage.Text.Trim(),
                 Type = MessageType,
                 Time = DateTime.Now
             };
@@ -44,6 +48,16 @@ namespace AdminToolManagementStudio.Controls
             stackPanel1.Controls.Add(m);
             stackPanel1.ScrollControlIntoView(m);
             SendMessage?.Invoke(message);
+            txtNewMessage.Text = "";
+            c.Enabled = true;
+        }
+
+        private void txtNewMessage_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && e.Control)
+            {
+                btnSend_Click(sender,e);
+            }
         }
     }
 }

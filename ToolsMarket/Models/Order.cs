@@ -32,6 +32,8 @@ namespace ToolsMarket.Models
 
         [NotMapped]
         public OrderStatus OrderStatus { get; set; }
+
+
     }
 
     public enum OrderStatus

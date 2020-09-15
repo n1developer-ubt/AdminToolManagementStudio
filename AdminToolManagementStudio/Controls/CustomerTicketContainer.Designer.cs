@@ -33,6 +33,7 @@
             // 
             // pnlTick
             // 
+            this.pnlTick.AutoScroll = true;
             this.pnlTick.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlTick.Location = new System.Drawing.Point(0, 0);
             this.pnlTick.Name = "pnlTick";

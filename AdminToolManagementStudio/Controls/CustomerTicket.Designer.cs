@@ -33,22 +33,24 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblID = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblDate
             // 
-            this.lblDate.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblDate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.Location = new System.Drawing.Point(55, 0);
+            this.lblDate.Location = new System.Drawing.Point(65, 0);
             this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(204, 20);
+            this.lblDate.Size = new System.Drawing.Size(191, 20);
             this.lblDate.TabIndex = 0;
             this.lblDate.Text = "label1";
             this.lblDate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.lblDate.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lblName_MouseClick);
-            this.lblDate.MouseEnter += new System.EventHandler(this.lblName_MouseLeave);
+            this.lblDate.MouseEnter += new System.EventHandler(this.lblName_MouseEnter);
             this.lblDate.MouseLeave += new System.EventHandler(this.lblName_MouseLeave);
             // 
             // lblName
@@ -67,8 +69,7 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.lblID);
-            this.panel1.Controls.Add(this.lblDate);
+            this.panel1.Controls.Add(this.tableLayoutPanel1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 42);
             this.panel1.Name = "panel1";
@@ -79,9 +80,9 @@
             // 
             this.lblID.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblID.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblID.Location = new System.Drawing.Point(0, 0);
+            this.lblID.Location = new System.Drawing.Point(3, 0);
             this.lblID.Name = "lblID";
-            this.lblID.Size = new System.Drawing.Size(55, 20);
+            this.lblID.Size = new System.Drawing.Size(56, 20);
             this.lblID.TabIndex = 1;
             this.lblID.Text = "label1";
             this.lblID.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -98,6 +99,21 @@
             this.panel2.Size = new System.Drawing.Size(259, 42);
             this.panel2.TabIndex = 3;
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.93822F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 76.06178F));
+            this.tableLayoutPanel1.Controls.Add(this.lblID, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lblDate, 1, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(259, 20);
+            this.tableLayoutPanel1.TabIndex = 2;
+            // 
             // CustomerTicket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -110,6 +126,7 @@
             this.Size = new System.Drawing.Size(259, 62);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -121,5 +138,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label lblID;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }

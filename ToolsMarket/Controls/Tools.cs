@@ -10,19 +10,37 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.Windows.Forms.Tools;
+using Syncfusion.WinForms.DataGrid.Events;
 using Syncfusion.WinForms.DataGrid.Interactivity;
 using ToolsMarket.DbContext;
 using ToolsMarket.Models;
 
 namespace ToolsMarket.Controls
 {
-    public partial class Tools : UserControl
+    public partial class Tools : UserControl,LoadableControl
     {
         public UserDbContext DbContext { get; set; }
 
         public Tools()
         {
             InitializeComponent();
+            sdgTools.QueryRowHeight+=SdgToolsOnQueryRowHeight;
+        }
+
+        private void SdgToolsOnQueryRowHeight(object sender, QueryRowHeightEventArgs e)
+        {
+            var r = (Tool) sdgTools.GetRecordAtRowIndex(e.RowIndex);
+
+            if (r == null) return;
+
+            if (r.Buy == null) return;
+
+            if (r.Buy.Equals("purchased", StringComparison.CurrentCultureIgnoreCase))
+            {
+                e.Height = 0;
+                e.Handled = true;
+            }
+
         }
 
         public void LoadAll()
@@ -32,7 +50,7 @@ namespace ToolsMarket.Controls
 
             DbContext.Tools.Load();
 
-            var tools = DbContext.Tools.ToList();
+            var tools = DbContext.Tools.AsNoTracking().ToList();
 
             tools.ForEach(t =>
             {
@@ -49,13 +67,18 @@ namespace ToolsMarket.Controls
 
             try
             {
-                //sdgTools.DataSource = null;
-                sdgTools.DataSource = tools;
+                if (sdgTools.InvokeRequired)
+                {
+                    sdgTools.Invoke(new System.Action(() => sdgTools.DataSource = tools));
+                }
+                else
+                    sdgTools.DataSource = tools;
             }
             catch (Exception e)
             {
                 // ignored
             }
+
         }
 
         private async void txtReload_Click(object sender, EventArgs e)
@@ -137,16 +160,11 @@ namespace ToolsMarket.Controls
 
             r.Buy = "Purchased";
 
+            sdgTools.InvalidateRowHeight(e.RowIndex);
+            sdgTools.TableControl.Invalidate();
             DbContext.Orders.Add(o);
             await DbContext.SaveChangesAsync();
         }
     }
 
-    public enum ToolStatus
-    {
-        Unknown,
-        Working,
-        NotWorking,
-        Checking
-    }
 }

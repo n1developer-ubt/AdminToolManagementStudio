@@ -26,6 +26,7 @@ namespace AdminToolManagementStudio.Controls
             lblName.Text = x.Name;
             lblDate.Text = x.LastUpdate.ToString("g");
             lblID.Text = x.TicketId.ToString();
+            //MessageBox.Show(x.TicketId.ToString());
             if (Ticket.Status == TicketStatus.Pending)
             {
                 BackColor = Color.FromArgb(246, 123, 0);
@@ -33,6 +34,21 @@ namespace AdminToolManagementStudio.Controls
             }
 
             BackColor = Color.FromArgb(79, 123, 42);
+        }
+
+        public void SetTicketStatus(TicketStatus status)
+        {
+            Ticket.Status = status;
+
+            if (IsSelected) return;
+
+            if (Ticket.Status == TicketStatus.Pending)
+            {
+                BackColor = Color.FromArgb(246, 123, 0);
+                return;
+            }
+
+            BackColor = Color.Green;
         }
 
         private void lblName_MouseEnter(object sender, EventArgs e)
@@ -60,17 +76,6 @@ namespace AdminToolManagementStudio.Controls
                 BackColor = hover ? Color.FromArgb(0, 88, 0) : Color.FromArgb(0, 128, 0);
             }
 
-            //if (hover)
-            //{
-            //    lblDate.BackColor = Color.FromArgb(170, 210, 238);
-            //    lblName.BackColor = Color.FromArgb(170, 210, 238);
-            //    lblID.BackColor = Color.FromArgb(170, 210, 238);
-            //    return;
-            //}
-
-            //lblDate.BackColor = Color.White;
-            //lblName.BackColor = Color.White;
-            //lblID.BackColor = Color.White;
         }
 
         private bool _isSelected;
@@ -83,8 +88,7 @@ namespace AdminToolManagementStudio.Controls
                 _isSelected = value;
                 if (value)
                 {
-                    lblDate.BackColor = Color.FromArgb(0, 122, 204);
-                    lblName.BackColor = Color.FromArgb(0, 122, 204);
+                    BackColor = Color.FromArgb(0, 122, 204);
                     return;
                 }
 

@@ -13,7 +13,13 @@ namespace AdminToolManagementStudio.Controls
 {
     public partial class Settings : UserControl
     {
-        public delegate void ActionPerformed(Models.Settings newSettings);
+        public enum SettingType
+        {
+            TempEmail,
+            DatabaseInfo
+        }
+
+        public delegate void ActionPerformed(Models.Settings newSettings, SettingType s);
         public event ActionPerformed SettingsUpdated;
         public Settings()
         {
@@ -62,12 +68,12 @@ namespace AdminToolManagementStudio.Controls
 
         private void btnSaveTempEmail_Click(object sender, EventArgs e)
         {
-            SettingsUpdated?.Invoke(Setting);
+            SettingsUpdated?.Invoke(Setting, SettingType.TempEmail);
         }
 
         private void btnSaveSettings_Click(object sender, EventArgs e)
         {
-            SettingsUpdated?.Invoke(Setting);
+            SettingsUpdated?.Invoke(Setting,SettingType.DatabaseInfo);
         }
     }
 }

@@ -18,5 +18,10 @@ namespace ToolsMarket.Models
         public string Type { get; set; }
 
         [NotMapped] public string Buy { get; set; } = "Buy";
+
+        public override string ToString()
+        {
+            return $"{Smtp}|{Port}|{Username}|{Password}|{(Ssl ? "Ssl":"None")}|{Status}|{Type}|{Price}";
+        }
     }
 }

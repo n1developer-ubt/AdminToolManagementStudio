@@ -12,7 +12,7 @@ namespace AdminToolManagementStudio.Controls
 {
     public partial class CustomerTicketContainer : UserControl
     {
-        private CustomerTicket SelectCustomerTicket;
+        public CustomerTicket SelectCustomerTicket;
 
         public delegate void TicketSelected(Models.CustomerTicket tic);
 

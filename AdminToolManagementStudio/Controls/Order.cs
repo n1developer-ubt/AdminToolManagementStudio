@@ -24,6 +24,7 @@ namespace AdminToolManagementStudio.Controls
         public Order()
         {
             InitializeComponent();
+            CheckForIllegalCrossThreadCalls = false;
             sdgOrders.QueryRowStyle += SfDataGrid1OnQueryRowStyle;
         }
 
@@ -109,7 +110,7 @@ namespace AdminToolManagementStudio.Controls
 
             //Orders = DbContext.Orders.Include(x => x.Customer).Include(x => x.Tool).ToObservableCollection();
 
-            await DbContext.Orders.LoadAsync();
+            await DbContext.Orders.Include(x => x.Customer).Include(x => x.Tool).LoadAsync();
 
 
             SetupGrouping();

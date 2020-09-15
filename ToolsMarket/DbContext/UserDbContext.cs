@@ -15,6 +15,8 @@ namespace ToolsMarket.DbContext
         public DbSet<Customer> Customers  { get; set; }
         public DbSet<Tool> Tools  { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OtherOrder> OtherOrders { get; set; }
+        public DbSet<OtherTool> OtherTools { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -26,23 +28,23 @@ namespace ToolsMarket.DbContext
             //    Password = "TJpzhECnwq",
             //    Database = "sql12363680"
             //}.ConnectionString, b => { b.EnableRetryOnFailure(5); });
-            //optionsBuilder.UseMySql(new MySqlConnectionStringBuilder()
-            //{
-            //    Server = "191.101.164.254",
-            //    Port = 3306,
-            //    UserID = "admin_usa",
-            //    Password = "S7hSaHHQI1",
-            //    Database = "admin_usa"
-            //}.ConnectionString, b => { b.EnableRetryOnFailure(5); });
-
             optionsBuilder.UseMySql(new MySqlConnectionStringBuilder()
             {
-                Server = "localhost",
+                Server = "191.101.164.254",
                 Port = 3306,
-                UserID = "root",
-                Password = "",
-                Database = "WCDToolManagement"
-            }.ConnectionString);
+                UserID = "admin_usa",
+                Password = "S7hSaHHQI1",
+                Database = "admin_usa"
+            }.ConnectionString, b => { b.EnableRetryOnFailure(5); });
+
+            //optionsBuilder.UseMySql(new MySqlConnectionStringBuilder()
+            //{
+            //    Server = "localhost",
+            //    Port = 3306,
+            //    UserID = "root",
+            //    Password = "",
+            //    Database = "WCDToolManagement"
+            //}.ConnectionString);
             base.OnConfiguring(optionsBuilder);
         }
     }

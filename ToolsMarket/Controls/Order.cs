@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,7 +17,7 @@ using ToolsMarket.Models;
 
 namespace ToolsMarket.Controls
 {
-    public partial class Order : UserControl
+    public partial class Order : UserControl,LoadableControl
     {
         public UserDbContext DbContext;
 
@@ -26,7 +25,7 @@ namespace ToolsMarket.Controls
         {
             InitializeComponent();
             SetupSummary();
-            sfDataGrid1.QueryRowStyle+=SfDataGrid1OnQueryRowStyle;
+            //sfDataGrid1.QueryRowStyle+=SfDataGrid1OnQueryRowStyle;
         }
 
         public void SetupSummary()
@@ -72,6 +71,7 @@ namespace ToolsMarket.Controls
             }
         }
 
+        private List<Models.Order> AllOrders;
         public void LoadAll()
         {
             if(DbContext == null) return;
@@ -87,29 +87,32 @@ namespace ToolsMarket.Controls
                 //DbContext.Orders.Load();
             }
             var orders = DbContext.Orders.AsNoTracking().Include(x=>x.Customer).Include(x=>x.Tool).Where(o=>o.Customer.Id == Customer.CurrentCustomer.Id).ToList();
-
+            AllOrders = orders;
             //MessageBox.Show(orders.Count + "");
 
-            orders.ForEach(order =>
-            {
-                try
-                {
-                    if (order.OrderStatus != OrderStatus.Accepted)
-                    {
-                        order.Tool.Password = "******************";
-                        order.Tool.Username = "******************";
-                    }
-                }
-                catch (Exception e)
-                {
+            //orders.ForEach(order =>
+            //{
+            //    try
+            //    {
+            //        if (order.OrderStatus != OrderStatus.Accepted)
+            //        {
+            //            order.Tool.Password = "******************";
+            //            order.Tool.Username = "******************";
+            //        }
+            //    }
+            //    catch (Exception e)
+            //    {
                     
-                }
-            });
+            //    }
+            //});
 
-            sfDataGrid1.DataSource = orders;
+            if (sfDataGrid1.InvokeRequired)
+                sfDataGrid1.Invoke(new System.Action(() => sfDataGrid1.DataSource = orders));
+            else
+                sfDataGrid1.DataSource = orders;
         }
 
-        private void btnReload_Click(object sender, EventArgs e)
+        private async void btnReload_Click(object sender, EventArgs e)
         {
             if(!(sender is Control c)) return;
 
@@ -123,6 +126,25 @@ namespace ToolsMarket.Controls
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             sfDataGrid1.SearchController.Search((sender as TextBoxExt).Text);
+        }
+
+        private void sfDataGrid1_CellButtonClick(object sender, CellButtonClickEventArgs e)
+        {
+            if (e.Column.HeaderText.Equals("Action", StringComparison.CurrentCultureIgnoreCase))
+            {
+                var o = (Models.Order) sfDataGrid1.GetRecordAtRowIndex(e.RowIndex);
+
+                Clipboard.SetText(o.Tool.ToString());
+            }
+        }
+
+        private void sfButton1_Click(object sender, EventArgs e)
+        {
+            var content = "";
+
+            AllOrders.ForEach(o=>content+=o.Tool.ToString()+"\n");
+
+            Clipboard.SetText(content.Trim());
         }
     }
 }
